@@ -1,0 +1,139 @@
+%=========Checkpoints=========%
+%
+% COMPACTNESS => SEQUENTIAL COMPACTNESS
+
+\chapter{Metric Spaces}
+
+\begin{conv}
+	Unless stated otherwise, assume the following:
+	\begin{assmplist}
+		\item $X$, $Y$ will denote metric spaces.
+		
+		\item Subsets of metric spaces will be seen as metric subspaces.
+		
+		\item For $x\in X$ and $r > 0$, we'll use
+		\begin{assmplist}
+			\item $B(x, r) := \{y\in X : d(y, x) < r\}$, and
+			\item $D(x, r) := \{y\in X : d(y, x)\le r\}$.
+		\end{assmplist}
+		Sometimes, we'll also denote these by $B_r(x)$ and $D_r(x)$.
+		
+		\item A metric space will also be considered a topological space under the induced topology.
+		
+		\item The diameter of a subset $A$ of a metric space will be denoted by $\delta(A)$.
+	\end{assmplist}
+\end{conv}
+
+\section{General}
+	
+	The triangle inequality immediately yields:
+	
+	\begin{lem}
+		Metric is continuous. Further, if $E\subseteq X$, then $x\mapsto d(x, E)$ is also continuous.
+	\end{lem}
+	
+	\begin{rmk}
+		Note that $d(x, \emptyset) = +\infty$ for all $x$.
+	\end{rmk}
+
+	Let $E\subseteq X$ and $x\in X$. Then a point $y\in E$ is called \defn{a point of best approximation} for $x$ in $Y$ iff $d(x, y) = d(x, E)$.
+	
+	
+
+\section{Uniform Properties}
+
+	\begin{prp}
+		Uniform continuity $\implies$ Cauchy continuity $\implies$ continuity.
+	\end{prp}
+	
+	\begin{proof}
+		content
+	\end{proof}
+	
+	\begin{cor}
+		Uniformly continuous functions can be extended to the closure of the domain.
+	\end{cor}
+
+	\begin{prp}
+		Continuous functions on compact sets are uniformly continuous.
+	\end{prp}
+	
+	\begin{proof}
+		Let $f\colon X\to Y$ be continuous with $X$ being compact. Let $\epsilon > 0$. For each $x\in X$, choose $\delta_x > 0$ such that $f(B_{\delta_x}(x))\subseteq B_\epsilon(f(x))$.\myMargin{No \AC needed!}
+		Let $B_{\delta_{x_1}/2}(x_1), \ldots, B_{\delta_{x_n}/2}(x_n)$ cover $X$ (since \ul{$X$ is compact}). Now, any $x, y\in X$ lie in some $B_{\delta_{x_i}}(x_i)$ whenever $d(x, y) < \min(\delta_{x_1}, \ldots, \delta_{x_n})/2\wimplies d(f(x), f(y)) < \epsilon$.
+	\end{proof}
+	
+	\begin{rmk}
+		To see the necessity of compact domain, consider $x\mapsto 1/x$ on $\mathbb R\setminus\{0\}$.
+	\end{rmk}
+	
+	
+	\begin{prp}[Uniform convergence preserves continuity]
+		Let $E$ be a topological space and $E_1\subseteq E$. Let $f_n\colon E_1\to X$ converge uniformly to $f$. Let $c\in\ell(E_1)$ with each $\lim_{x\to c} f_n(x)$ existent. Then
+		\[
+		\lim_{x\to c} f(x) = \lim_{n\to\infty}\lim_{x\to c}f_n(x)
+		\]
+		for each $c\in\ell(E_1)$.\footnote{Note that metric spaces are Hausdorff so that limits are unique.}
+	\end{prp}
+	
+	\begin{proof}
+		
+	\end{proof}
+	
+	\begin{rmk}
+		content
+	\end{rmk}
+	
+	
+	
+\section{Baire's Category Theorem}
+	
+	\begin{prp}[Cantor's intersection]
+		In a complete metric space, the intersection of a decreasing sequence of closed subsets with diameters going to zero, is a singleton.
+	\end{prp}
+	
+	\begin{proof}
+		Let $F_i$'s be the closed sets under consideration. That there's at most one point in the intersection is clear since \ul{$\delta(F_i)\to 0$}. Now, choose\myMargin{\CC used.}
+		$x_i\in F_i$, which form a Cauchy sequence since \ul{$\delta(F_i)\to 0$}. Since the space is \ul{complete}, let $x_i\to x$, and since \ul{each $F_i$ is closed}, $x$ lies in the intersection.
+	\end{proof}
+	
+	\begin{rmk}
+		The necessity of each hypothesis is easy to see.
+	\end{rmk}
+	
+	\begin{dgrs}
+		The diameter of the intersection of a decreasing sequence of subsets needn't be the corresponding limit of diameters even if the sets are closed and bounded. For instance, consider an infinite dimensional \NLS containing orthonormal vectors $e_1, e_2, \ldots$. Take $F_i := \{e_i, e_{i + 1}, \ldots\}$. Then each $\delta(F_i) = \sqrt 2$, and still the intersection is empty. However, there is one case where we can say something:
+		
+		\begin{prp}
+			Let $F_1\supseteq F_2\supseteq\cdots$ be closed subsets of a metric space with $F_1$ being compact. Then $\delta(\bigcap_i F_i) = \lim_i\delta(F_i)$.
+		\end{prp}
+		
+		% COMPACTNESS => SEQUENTIAL COMPACTNESS
+		\begin{dgrsProof}
+			``$\le$'' is clear. For ``$\ge$'', let $\epsilon> 0$ and choose $x_i, y_i\in F_i$ such that $d(x_i, y_i) > \delta(F_i) - \epsilon$ (note that each $\delta(F_i) < +\infty$). Now, since \ul{$F_1$ is compact}, let $x_{n_i}\to x$ and $y_{n_i}\to y$ in $F_1$. Since \ul{$F_i$'s are closed}, $x$, $y$ lie in the intersection so that $\delta(\bigcap_i F_i)\ge d(x, y)\ge \lim_i\delta(F_i) - \epsilon$.
+		\end{dgrsProof}
+	\end{dgrs}
+	
+	\begin{thm}[Baire's category]\label{THM: BCT}
+		In a complete metric space, complements of meager sets are dense.
+	\end{thm}
+	
+	\begin{proof}
+		Let $A_1, A_2, \ldots$ be nowhere dense. We show that $X\setminus \bigcup_i A_i$ is dense. Pick a nonempty open $U$. Since \ul{$A_1$ is nowhere dense}, choose $x_1\in U$ and $r_1 > 0$ such that $B_{r_1}(x_1)\subseteq U$ and $B_{r_1}(x_1)\cap A_1 = \emptyset$. Having chosen\myMargin{\DC used.}
+		$x_i$, $r_i$, choose $x_{i + 1}\in B_{r_i}(x_i)$ such that
+		\begin{assmplist}
+			\item $B_{r_{i + 1}}(x_{i + 1})\subseteq B_{r_i}(x_i)$,
+			\item $r_{i + 1}\le r_i/2$, and
+			\item $B_{r_{i + 1}}(x_{i + 1})\cap A_{i + 1} = \emptyset$.
+		\end{assmplist}
+		This is possible since \ul{$A_i$ is nowhere dense}.
+		Thus, $\clos{B_{r_1}(x_1)}\supseteq\clos{B_{r_2}(x_2)}\supseteq\cdots$ with $\delta(\clos{B_{r_i}(x_i)})\le\delta(D_{2r_i}(x_i)) \which = 2r_i\which\to 0$ since $r_i\le r_1/2^{i - 1}$. By Cantor (since \ul{$X$ is complete}), let $x\in\bigcap_i\clos{B_{r_i}(x_i)}$. Then $x\notin \bigcup_i A_i$ since each $B_{r_i}(x_i)\cap A_i = \emptyset$. Finally, $x\in \clos{B_{r_1}(x_1)}$ and \wlogg, we cloud've chosen $x_1$, $r_1$ such that $\clos{B_{r_1}(x_1)}\subseteq U$.
+	\end{proof}
+	
+	\begin{rmk}
+		Necessity of completeness is demonstrated by considering any countable metric space in which singletons are not open, for instance $\mathbb Q$.
+	\end{rmk}
+	
+	\begin{cor}
+		If countably many closed subsets of a complete metric space unite to the whole space, then one of them has a nonemtpy interior.
+	\end{cor}
