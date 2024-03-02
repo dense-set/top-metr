@@ -35,6 +35,26 @@
 	\begin{rmk}
 		Note that $d(x, \emptyset) = +\infty$ for all $x$.
 	\end{rmk}
+	
+	
+	\begin{lem}\label{LEM: separable metric spaces are second countable}
+		\leavevmode
+		\begin{mylist}
+			\item Metric spaces are first countable.
+			\item Separable metric spaces are second countable.
+		\end{mylist}
+	\end{lem}
+	
+	\begin{proof}
+		\begin{mylist}
+			\item $B_{1/n}(x)$'s forms a local base at $x$.
+			
+			\item Let $S$ be a countable dense subset of $X$. Then $\bigcup_{x\in S}\{ B_{1/n}(x) : n\ge 1 \}$ forms a countable base:
+			\begin{subproof}
+				Consider $B_{1/n}(y)$. Let $x\in B_{1/2n}(y)\cap S$. Then $y\in B_{1/2n}(x)\subseteq B_{1/n}(y)$.\qedhere
+			\end{subproof}
+		\end{mylist}
+	\end{proof}
 
 	Let $E\subseteq X$ and $x\in X$. Then a point $y\in E$ is called \defn{a point of best approximation} for $x$ in $Y$ iff $d(x, y) = d(x, E)$.
 	
@@ -42,25 +62,406 @@
 
 \section{Uniform Properties}
 
+Uniform properties encompass things like uniform continuity and Cauchy sequences.
+
+
+
+\begin{lem}\label{LEM: closed subsets in complete spaces}
+	In a complete space, closed subspaces are precisely the complete ones.
+\end{lem}
+
+
+\begin{lem}
+	In a metric space, each sequence has a Cauchy subsequence $\iff$ the space is totally bounded.
+\end{lem}
+
+\begin{proof}
+	``$\Rightarrow$'': Consider a sequence $(x_i)$. Take an infinite subset $I_1$ of the indices such that $\{x_i : i\in I_1\}$ lies in a ball of diameter $1$. Having chosen $I_n$, choose\myMargin{
+		\DC used.}
+	an infinite subset $I_{n + 1}\subseteq I_n$ such that $\{x_i : i\in I_{n + 1}\}$ lies in a ball of diameter $1/(n + 1)$. (This is possible since the the space is \ul{totally bounded}.) Now, choose $i_n\in I_n$ such that $(i_n)$ is increasing. Then $(x_{i_n})_n$ forms a Cauchy sequence, for for $n > m\ge N$, we have $d(x_{i_m}, x_{i_n}) < 1/N$.
+	
+	``$\Leftarrow$'': Suppose $X$ is not totally bounded so that take an $\epsilon > 0$ such that no finitely many balls of radius $\epsilon$ can ever cover $X$. Let $x_1\in X$.\footnote{
+		Note that $X$ has got to be enoenmtpy.}
+	Having chosen $x_1, \ldots, x_n$, choose\myMargin{
+		\DC used.}
+	$x_{n + 1}\in X\setminus\bigcup_{i = 1}^n B_\epsilon(x_i)$. Then $(x_i)$ is non-Cauchy sequence, for $d(x_i, x_j)\ge \epsilon$ for all $i\ne j$.
+\end{proof}
+
+\begin{rmk}
+	The discrete metric on an infinite set, which is not totally bounded, contains sequences with no Cauchy subsequences.
+\end{rmk}
+
+
+
+\subsection{Completion of metric spaces}
+
+	A \defn{completion} of $X$ is a complete metric space $\hat X$ together with an isometry $\iota\colon X\to \hat X$ such that any isometry $X\to Y$ into a complete metric space $Y$ factors uniquely through $\iota$ via an isometry:
+	\[
+	\begin{tikzcd}[column sep=small]
+		X\ar[rr]\ar[dr, "\iota"'] & & Y\\
+		& \hat X\ar[ur, dashed] & 
+	\end{tikzcd}
+	\]
+	
+	\begin{cor}
+		If $X$ is complete, then $\id\colon X\to X$ is a completion of $X$.
+	\end{cor}
+	
+	\begin{prp}\label{PRP: completion of metric spaces}
+		Each metric space admits a completion, which is unique up to bi-isometries.\footnote{
+			A bi-isometry is a bijective isometry whose inverse is also an isometry.
+		}
+	\end{prp}
+	
+	\noindent The following easy facts will be employed to simplify the proof:
+	
+	\begin{lem}\label{LEM: some properties of Cauchy sequences}
+		\leavevmode
+		\begin{mylist}
+			\item If $(x_i)$ is Cauchy and $(\alpha_i)\in\mathbb R^+$, then there exists a subsequence $(x_{i_j})$ such that for each $N$, we have $d(x_{i_j}, x_{i_k}) < \alpha_N$ whenever $j, k\ge N$.
+			
+			\item A Cauchy sequence converges iff any of its subsequence converges.
+		\end{mylist}
+	\end{lem}
+	
+	\begin{proof}[Proof of \myRef{PRP: completion of metric spaces}]
+		The uniqueness follows by the usual categorical argument. Let's show the existence of a completion of $X$. Define $\hat X$ to be set of the Cauchy sequences in $X$ modded out by the following equivalence relation:
+		\[
+		(x_i)\sim (y_i) \text{ iff } d(x_i, y_i)\to 0
+		\]
+		The following defines a well-defined metric on $\hat X$:
+		\[
+		\hat d\bigl( (x_i), (y_i) \bigr) := \lim\nolimits_i d(x_i, y_i)
+		\]
+		We show that $\hat X$ is complete:
+		\begin{subproof}
+			Let $\bigl(\,\overline{x^{(n)}}\,\bigr)$ be Cauchy in $\hat X$, where each $x^{(n)}$ is a Cauchy sequence $\bigl(x^{(n)}_i\bigr)$ in $X$.\myMargin{
+				\CC used.
+			} Noting that each subsequence of a Cauchy sequence in $X$ is related to the parent sequence, and due to \myRef{LEM: some properties of Cauchy sequences}, we may \wlogg assume:
+			\begin{mylist}
+				\item $n \ge m\implies \hat d\bigl(\, \overline{x^{(n)}}, \overline{x^{(m)}}\, \bigr) < 1/m$.
+				
+				\item For each $n$, we have $j\ge i\implies d\bigl(x^{(n)}_j, x^{(n)}_i\bigr) < 1/i$.
+			\end{mylist}
+			Now, it follows that the diagonal sequence $\bigl(x^{(i)}_i\bigr)$ is Cauchy:
+			\begin{alignat*}{2}
+				d\bigl(x^{(j)}_j, x^{(i)}_i\bigr)
+				& \le d\bigl(x^{(j)}_j, x^{(i)}_j\bigr) + d\bigl(x^{(i)}_j, x^{(i)}_i\bigr)\\
+				& < d\bigl(x^{(j)}_j, x^{(j)}_k\bigr) + d\bigl(x^{(j)}_k, x^{(i)}_k\bigr) + d\bigl(x^{(i)}_k, x^{(i)}_j\bigr) & \text{($k$ arbitrary)}\\
+				& \phantom{{} < d\bigl(x^{(j)}_j, x^{(j)}_k\bigr) + d\bigl(x^{(j)}_k, x^{(i)}_k\bigr) abc} {}+ 1/i & \text{(letting $j\ge i$)}\\
+				& < 1/j + d\bigl(x^{(j)}_k, x^{(i)}_k\bigr) + 1/j +1/i & \text{(letting $k\ge j$)}\\
+				& \le 2/i + \hat d\bigl(\, \overline{x^{(j)}},\, \overline{x^{(i)}}\, \bigr) + 1/i & \text{(taking $k\to \infty$)}\\
+				& < 2/j + 2/i & \text{(since $j\ge i$)}
+ 			\end{alignat*}
+			Also, $\overline{x^{(n)}}\to \overline{\bigl(x^{(i)}_i\bigr)}$ in $\hat X$:
+			\begin{alignat*}{2}
+				d\bigl( x^{(n)}_i, x^{(i)}_i \bigr)
+				& \le d\bigl( x^{(n)}_i, x^{(n)}_j \bigr) + d\bigl( x^{(n)}_j, x^{(i)}_j \bigr) + d\bigl( x^{(i)}_j, x^{(i)}_i \bigr)\\
+				& < 1/i + d\bigl( x^{(n)}_j, x^{(i)}_i \bigr) + 1/i & \text{(letting $j\ge i$)}\\
+				& < 2/i + d\bigl(\, \overline{x^{(n)}},\,\overline{x^{(i)}} \,\bigr) & \text{(taking $j\to\infty$)}\\
+				& < 3/i
+			\end{alignat*}
+		\end{subproof}
+
+		\noindent We now check for the universal property:
+		\begin{subproof}
+			Note that $\iota\colon X\to\hat X$ given by $x\mapsto (x, x, \ldots)$ is an isometry. Let $f\colon X\to Y$ be another isometry with $Y$ being complete. Suppose it does factor through $\iota$ via an isometry $\hat f$:
+			\[
+			\begin{tikzcd}[column sep=small]
+				X\ar[dr, "\iota"']\ar[rr, "f"] && Y\\
+				& \hat X\ar[ur, dashed, "\hat f"'] &
+			\end{tikzcd}
+			\]
+			This in turn determines $\hat f$ uniquely:
+			\begin{subproof}
+				Let $\overline{(x_i)}\in\hat X$, where $(x_i)$ is Cauchy in $X$. Clearly, $\iota(x_i)\to\overline{(x_i)}$ so that
+				\[
+				f(x_i)\to \hat f\bigl(\, \overline{(x_i)} \,\bigr) \addtag\label{EQN: metric completion proof}
+				\]
+				as \ul{$\hat f$ is continuous} and \ul{$\hat f\circ \iota = f$}.
+			\end{subproof}
+			We now show that \myRef{EQN: metric completion proof} indeed defines a factoring of $f$ via $\iota$:
+			\begin{prooflist}
+				\item $\hat f$ is well-defined:
+				\begin{rmklist}
+					\item If $(x_i)$ is Cauchy in $X$, then since \ul{$f$ is an isometry} and \ul{$Y$ is complete}, $(f(x_i))$ is convergent in $Y$.
+					
+					\item If $(x_i)$ and $(y_i)$ are equivalent Cauchy sequences in $X$, then $d(x_i, y_i)\to 0\wimplies d(f(x_i), f(y_i))\to 0$ (since \ul{$f$ an isometry}) so that $d\bigl(\lim_i f(x_i), \lim_i f(y_i)\bigr) = 0$.\footnote{Recall the component-wise convergence in product topology.}
+				\end{rmklist}
+				
+				\item $\hat f$ is an isometry:
+				\begin{alignat*}{2}
+					d\Bigl( \hat f\bigl(\, \overline{(x_i)} \,\bigr),\, \hat f\bigl(\, \overline{(y_i)} \,\bigr) \Bigr)
+					& = d\bigl(\lim\nolimits_i f(x_i), \lim\nolimits_i f(y_i)\bigr)\\
+					& = \lim\nolimits_i d(f(x_i), f(y_i))\\
+					& = \lim\nolimits_i d(x_i, y_i) & \text{(\ul{$f$ is an isometry})}\\
+					& = \hat d\bigl(\, \overline{(x_i)},\, \overline{(y_i)} \,\bigr)
+				\end{alignat*}
+				
+				\item Finally, $\hat f\circ \iota = f$ is clear.\qedhere
+			\end{prooflist}
+		\end{subproof}
+	\end{proof}
+	
+	\begin{comment}
+		\begin{rmk}
+		Notice that while proving the uniqueness of $\hat f$, full power of $\hat f$'s isometry was not used, just the continuity. Thus, we can strengthen the universal property like so: Any $f\colon X\to Y$ with $Y$ complete factors uniquely via $\iota$, say through $\hat f$, and this $\hat f$ is further an isometry.
+	\end{rmk}
+	\end{comment}
+	
+	
 	\begin{prp}
-		Uniform continuity $\implies$ Cauchy continuity $\implies$ continuity.
+		Any space is dense in its completion.\myMargin{
+			Ponder: Can this be taken as an alternative universal property?
+		}
 	\end{prp}
 	
 	\begin{proof}
-		content
+		Let $\iota\colon X\to \hat X$ be a completion of $X$. Now, the restriction $\iota|\colon X\to \clos{\iota(X)}$ is also a completion of $\hat X$:
+		\begin{prooflist}
+			\item $\clos{\iota(X)}$ is complete due to \myRef{LEM: closed subsets in complete spaces} and $\iota|$ is still an isometry.
+			
+			\item Let $f\colon X\to Y$ be an isometry with $Y$ complete. Then $f$ factors through $\iota$ which induces a factoring through $\iota|$ as well:
+			\[
+			\begin{tikzcd}
+				& X\ar[dl, "\iota|"']\ar[d, "\iota"]\ar[dr, "f"] &\\
+				\clos{\iota(X)}\ar[r, hook] & \hat X\ar[r, dashed] & Y
+			\end{tikzcd}
+			\]
+			For uniqueness, just note that any factoring $\hat f$ of $f$ through $\iota|$ is uniquely determined on $\iota(X)$ which is dense in $\clos{\iota(X)}$, thereby also getting determined on $\clos{\iota(X)}$ (by \myRef{PRP: cont func into Hausdorff uniquely by its vals on dense subset}):
+			\[
+			\begin{tikzcd}
+				& X\ar[dl]\ar[d, "\iota|"]\ar[dr, "f"] &\\
+				\iota(X)\ar[r, hook] & \clos{\iota(X)}\ar[r, "\hat f"'] & Y
+			\end{tikzcd}
+			\]
+		\end{prooflist}
+		
+		Since \ul{$\hat X$ is a completion}, there exists an isometry $\alpha$ such that \tfdc:
+		\[
+		\begin{tikzcd}[column sep=small]
+			& X\ar[dl, "\iota|"']\ar[dr, "\iota"] &\\
+			\clos{\iota(X)}\ar[rr, hook, "\operatorname{incl}", shift left] & & \hat X\ar[ll, dashed, "\alpha", shift left]
+		\end{tikzcd}
+		\]
+		It follows that $\iota|$ factors through itself via $\alpha\circ\operatorname{incl}$, so that it is precisely $\id_{\clos{\iota(X)}}$ (since \ul{$\clos{\iota(X)}$ is a completion}) $\wimplies$ $\operatorname{incl}$ is surjective $\wimplies$ $\clos{\iota(X)} = \hat X$.
 	\end{proof}
 	
+	
+	From \myRef{LEM: denseness is transitive}, it now immediately follows that:
+	
 	\begin{cor}
-		Uniformly continuous functions can be extended to the closure of the domain.
+		Completion preserves separability.
 	\end{cor}
+	
+	
+\subsection{Metric equivalences}
 
 	\begin{prp}
+		For metrics on a given set, we have:
+		\begin{center}
+			Uniform equivalence $\implies$ $\id$ is uniformly continuous in both directions $\implies$ same Cauchy sequences $\implies$ same convergence $\iff$ topological equivalence.
+		\end{center}
+	\end{prp}
+	
+	\begin{proof}
+		The first two implications are trivial and the last follows from \myRef{COR: first countable T1 topologgies via their sequences}. For the penultimate, just note that $x_i\to c$ iff $x_1, c, x_2, c, \ldots$ is Cauchy.
+	\end{proof}
+	
+	\begin{rmk}
+		None of the converses are true. Let $f\colon X\to X$ be a \homeo which thus induces a topologically equivalent metric on $X$ (see \myRef{LEM: to show counters for equiv of metrics}).
+		\begin{mylist}
+			\item Let $f$, $f^{-1}$ be uniformly continuous and $f$ not be Lipschitz (for instance, $f\colon x\mapsto \sqrt x$ on $[0, 1]$\footnote{
+				See \myRef{PRP: cont funcs on compact are unif cont}.
+				}).
+			Then $\id$ is uniformly continuous in both directions and yet the metrics are not uniformly equivalent.
+			
+			\item Let $f$ not be uniformly continuous and $X$ be complete\footnote{
+				Note that $X_\text{old}$ is complete iff $X_\text{new}$ is.
+				}
+			(like $x\to x^3$ on $\mathbb R$). Then Cauchy sequences are just convergent sequences, which are thus the same. However, $\id\colon X_\text{old}\to X_\text{new}$ is not uniformly continuous.
+			
+			\item Consider $x\mapsto 1/x$ on $\mathbb R^+$. However, note that $1, 2, 3, \ldots$ is Cauchy in the new metric and not in the old one.
+		\end{mylist}
+	\end{rmk}
+	
+	\begin{dgrs}
+		\begin{lem}\label{LEM: to show counters for equiv of metrics}
+			Let $f\colon X\to X$ be a bijection which thus induces a new metric on $X$.\footnote{
+				Only injectivity is required if we just need to have a new metric.
+				}
+			Then \tfh:
+			\begin{mylist}
+				\item The new metric is topologically equivalent to the old one $\iff$ $f$ is a \homeo on $X_\text{old}$.
+				
+				\item $\id\colon X_\text{old}\to X_\text{new}$ is uniformly continuous $\iff$ $f$ is uniformly continuous on $X_\text{old}$.
+			\end{mylist}
+		\end{lem}
+		
+		\begin{dgrsProof}
+			\begin{mylist}
+				\item Use \myRef{COR: first countable T1 topologgies via their sequences} and \myRef{PRP: continuity and closure in first countable}.
+				
+				\item Since by definition, $d_\text{new}(x, y) = d_\text{old}(f(x), f(y))$.\qedhere
+			\end{mylist}
+		\end{dgrsProof}
+	\end{dgrs}
+
+
+
+\subsection{Stronger forms of continuity}
+
+	\begin{prp}
+		\leavevmode
+		\begin{mylist}
+			\item Uniform continuity on every totally bounded subset of the domain $\iff$ Cauchy-regularity.
+			
+			\item Cauchy-regularity $\implies$ continuity.
+		\end{mylist}
+	\end{prp}
+	
+	\begin{proof}
+		\begin{mylist}
+			\item ``$\Rightarrow$'' is obvious since Cauchy sequences are totally bounded.
+			
+			``$\Leftarrow$'': Suppose $f$ is Cauchy-regular and yet not uniformly continuous on a totally bounded subset $E$ of the domain, so that we may take an $\epsilon > 0$ and for each $n$, choose\myMargin{
+				\CC used!
+			}
+			$x_n, y_n\in E$ such that $d(x_n, y_n) < 1/n$ and yet $d(f(x_n), f(y_n)) \ge \epsilon$. \Wlogg, let $(x_n)$, $(y_n)$ be Cauchy (for $E$ is \ul{totally bounded}). Now, the sequence $x_1, y_1, x_2, y_2, \ldots$ is also Cauchy, and despite that, its $f$-image isn't.
+			
+			
+			\item Let $f$ be Cauchy-regular and $x_i\to c$ in the domain. Then $x_1, c, x_2, c, \ldots$ is Cauchy $\wimplies$ $f(x_1), f(c), f(x_2), f(c), \ldots$ is Cauchy $\wimplies$ $f(x_i)\to f(c)$.\qedhere
+		\end{mylist}
+	\end{proof}
+	
+	\begin{rmk}
+		\begin{rmklist}
+			\item $x\mapsto x^2$ on $\mathbb R$ is Cauchy-regular and not uniformly continuous.
+			
+			\item $x\mapsto 1/x$ on $\mathbb R^+$ is continuous but not Cauchy-regular.
+		\end{rmklist}
+	\end{rmk}
+	
+	
+	\begin{thm}[Extension of Cauchy-regulars]\label{THM: extension of Chauchy-regs}
+		A Cauchy-regular function from a dense subset to a complete codomain has a unique continuous extension to the whole of domain, which is further Cauchy-regular. Furthermore, this extension preserves uniform continuity and isometry-city.
+	\end{thm}
+	
+	\begin{proof}
+		Let $f\colon A\to Y$ be Cauchy-regular where $A$ is dense in $X$, and $Y$ complete. Let's first settle uniquness.\footnote{Which also directly follows from \myRef{PRP: cont func into Hausdorff uniquely by its vals on dense subset}.} Let $x\in X$. Then take a sequence\myMargin{
+			\CC used; avoidable if $X$ separable.
+		} $(a_i)\in A$ such that $a_i\to x$ (since \ul{$A$ dense in $X$}). If $\tilde f\colon X\to Y$ is a continuous extension of $f$, then we must have $f(a_i)\to \tilde f(x)$.
+		
+		Let's verify that this indeed gives a well-defined Cauchy-regular extension:
+		\begin{prooflist}
+			\item Well-defined:
+			\begin{mylist}
+				\item If $(a_i)$ is Cauchy in $A$, then by \ul{Cauchy-regularity}, it's $f$-image is also Cauchy, and thus \cgt due to \ul{completeness of $Y$}.
+				
+				\item Let $(a_i), (b_i)\in A$ converge to the same point in $X$. Then the interleaved sequence $a_0, b_0, a_1, b_1, \ldots$ is Cauchy. Due to \ul{Cauchy-regularity}, its $f$-image is also Cauchy $\wimplies$ $\lim_i f(a_i) = \lim_i f(b_i)$.
+			\end{mylist}
+			
+			
+			
+			\item Extension:
+			This is clear since for $a\in A$, the constant sequence $(a, a, \ldots)$ converges to $a$ so that $\tilde f(a) = \lim_i f(a) = f(a)$.
+			
+			
+			
+			\item Cauchy-regularity:
+			Let $(x^{(n)})\in X$ be Cauchy. We need to show that it's $\tilde f$-image is Cauchy as well. As before due to \ul{denseness of $A$}, choose Cauchy sequences\myMargin{
+				\CC used twice; both avoidable if $X$ separable.
+			} $( a^{(n)}_i )\in A$ such that $a^{(n)}_i\to x^{(n)}$ so that $\tilde f(x^{(n)}) = \lim_i b^{(n)}_i$. where $b^{(n)}_i := f(a^{(n)}_i)$. Note that
+			\begin{mylist}
+				\item the Cauchy-ness of $(x^{(n)})$ translates to $\lim_i d(a^{(m)}_i, a^{(n)}_i)\to 0$ as $m, n\to\infty$, and similarly,
+				
+				\item that of $(\tilde f(x^{(n)}))$ translates to $\lim_i d(b^{(m)}_i, b^{(n)}_i)\to 0$ as $m, n\to\infty$.
+			\end{mylist}
+			%
+			Since the sequences are Cauchy, assume for all $n$'s \wlogg, that $d(a^{(n)}_j, a^{(n)}_i), d(b^{(n)}_j, b^{(n)}_i) < 1/i$ whenever $j\ge i$.
+			
+			Note that it suffices to get hold of a ``diagonal'' sequence $(b^{(n)}_{N_n})$ that is Cauchy with $N_n$'s increasing\footnote{
+				Actually, what is required in the proof is just that $1/N_n\to 0$.
+			} for then we'll have
+			\begin{alignat*}{2}
+				d(b^{(m)}_i, b^{(n)}_i)
+				& \le d(b^{(m)}_i, b^{(m)}_{N_m}) + d(b^{(m)}_{N_m}, b^{(n)}_{N_n}) + d(b^{(n)}_{N_n}, b^{(n)}_i)\\
+				& < 1/N_m + d(b^{(m)}_{N_m}, b^{(n)}_{N_n}) + 1/N_n & \text{(taking $i\ge N_m, N_n$)}
+			\end{alignat*}
+			so that we'll have $\lim_i d(b^{(m)}_i, b^{(n)}_i)$ being less than the \RHS which indeed goes to $0$ as $m, n\to \infty$ (since \ul{$(b^{(n)}_{N_n})$ Cauchy} and \ul{$N_n$'s increasing}).
+			
+			Since \ul{$f$ is Cauchy-regular}, it suffices to find a Cauchy $(a^{(n)}_{N_n})$. Choose $N_n$'s increasing, such that $d(a^{(n)}_i, a^{(n)}_n) < 1/n$ for each $i\ge n$. Now,
+			\begin{alignat*}{2}
+				d(a^{(m)}_{N_m}, a^{(n)}_{N_n})
+				& \le d(a^{(m)}_{N_m}, a^{(m)}_{N_n}) + d(a^{(m)}_{N_m}, a^{(n)}_{N_n})\\
+				& < 1/N_m + d(a^{(m)}_{N_m}, a^{(m)}_i) + d(a^{(m)}_i, a^{(n)}_i) & \text{(taking $n\ge m$)}\\
+				& \phantom{{} < 1/N_m}\hspace{10pt} {} + d(a^{(n)}_i, a^{(n)}_{N_n})\\
+				& < 2/N_m + d(a^{(m)}_i, a^{(n)}_i) + 1/N_n & \text{(taking $i\ge N_m, N_n$)}\\
+				& \le 2/N_m + 1/N_n + \lim\nolimits_i d(a^{(m)}_i, a^{(n)}_i) & \text{(taking $i\to \infty$)}
+			\end{alignat*}
+			which indeed goes to $0$ as $m, n\to\infty$.
+		\end{prooflist}
+			
+		Finally, we verify the preservations:
+			\begin{prooflist}
+				\item Preservation of uniform continuity:
+				Let $f$ be uniformly continuous. We need to show that $\tilde f$ is also uniformly continuous. Let $\epsilon > 0$ and take $\delta > 0$ such that $d(f(a), f(b)) < \epsilon$ whenever $d(a, b) < \delta$ for $a, b\in A$. Now, let $x, y\in X$ with $d(x, y) < \delta$. Take\myMargin{
+					Same comment on \CC.
+				} $(a_i), (b_i)\in A$ converging to $x$, $y$ \resp. Now, $d(a_i, b_i) < \delta$ eventually (as $\lim_i d(a_i, b_i) = d(x, y) < \delta$) so that $d(f(a_i), f(b_i)) < \epsilon$ eventually $\wimplies$ $d(\tilde f(x), \tilde f(y)) \which= \lim_i d(f(a_i), f(b_i))\le \epsilon$.
+				
+				
+				\item Preservation of isometry-city:
+				Same technique as in the last point.
+				\qedhere
+			\end{prooflist}
+	\end{proof}
+	
+	Thus, for a continuous function to be Cauchy-regular, it must be continuously extensible to the completion of its domain.
+	
+	\begin{cor}
+		If $A$ is dense in $X$ and $\iota\colon X\to \hat X$ a completion of $X$, then
+		\[
+		\begin{tikzcd}
+			A\ar[r, hook] & X\ar[r, "\iota"] & \hat X
+		\end{tikzcd}
+		\]
+		is a completion of $A$.
+	\end{cor}
+	
+	\begin{proof}
+		It's clear that it's an isometry. Now, for $Y$ complete any isometry $f\colon A\to Y$ extends to $X\to Y$ via \myRef{THM: extension of Chauchy-regs} (since \ul{$A$ dense in $X$}), which then extends to $\hat X\to Y$:
+		\[
+		\begin{tikzcd}
+			A\ar[r, hook]\ar[dr, "f"'] & X\ar[r, "\iota"]\ar[d, dashed] & \hat X\ar[dl, dashed]\\
+			& Y &
+		\end{tikzcd}
+		\]
+		
+		For uniqueness, let $f$ be extended by $\tilde f_1$ and $\tilde f_2$:
+		\[
+		\begin{tikzcd}
+			A\ar[r, hook]\ar[dr, "f"'] & X\ar[r, "\iota"] & \hat X\ar[dl, shift left, "\tilde f_1"']\ar[dl, shift right, "f_2"]\\
+			& Y &
+		\end{tikzcd}
+		\]
+		Then $\tilde f_i\circ \iota$'s are continuous extensions of $f$. Since \ul{$A$ is dense in $X$}, these must be equal due to \myRef{PRP: cont func into Hausdorff uniquely by its vals on dense subset}, from where there equality follows from the universal property of the completion $\iota\colon X\to\hat X$.
+	\end{proof}
+	
+	\noindent This immediately yields:
+	
+	\begin{cor}
+		In a complete space, the closures of subsets are their completions.
+	\end{cor}
+	
+	
+
+	\begin{prp}\label{PRP: cont funcs on compact are unif cont}
 		Continuous functions on compact sets are uniformly continuous.
 	\end{prp}
 	
 	\begin{proof}
 		Let $f\colon X\to Y$ be continuous with $X$ being compact. Let $\epsilon > 0$. For each $x\in X$, choose $\delta_x > 0$ such that $f(B_{\delta_x}(x))\subseteq B_\epsilon(f(x))$.\myMargin{No \AC needed!}
-		Let $B_{\delta_{x_1}/2}(x_1), \ldots, B_{\delta_{x_n}/2}(x_n)$ cover $X$ (since \ul{$X$ is compact}). Now, any $x, y\in X$ lie in some $B_{\delta_{x_i}}(x_i)$ whenever $d(x, y) < \min(\delta_{x_1}, \ldots, \delta_{x_n})/2\wimplies d(f(x), f(y)) < \epsilon$.
+		Let $B_{\delta_{x_1}/2}(x_1), \ldots, B_{\delta_{x_n}/2}(x_n)$ cover $X$ (since \ul{$X$ is compact}). Now, any $x, y\in X$ lie in some $B_{\delta_{x_i}}(x_i)$ whenever $d(x, y) < \min(\delta_{x_1}, \ldots, \delta_{x_n})/2\wimplies d(f(x), f(y)) < 2\epsilon$.
 	\end{proof}
 	
 	\begin{rmk}
@@ -86,8 +487,10 @@
 	
 	
 	
+
+
 \section{Baire's Category Theorem}
-	
+
 	\begin{prp}[Cantor's intersection]
 		In a complete metric space, the intersection of a decreasing sequence of closed subsets with diameters going to zero, is a singleton.
 	\end{prp}
@@ -102,7 +505,7 @@
 	\end{rmk}
 	
 	\begin{dgrs}
-		The diameter of the intersection of a decreasing sequence of subsets needn't be the corresponding limit of diameters even if the sets are closed and bounded. For instance, consider an infinite dimensional \NLS containing orthonormal vectors $e_1, e_2, \ldots$. Take $F_i := \{e_i, e_{i + 1}, \ldots\}$. Then each $\delta(F_i) = \sqrt 2$, and still the intersection is empty. However, there is one case where we can say something:
+		The diameter of the intersection of a decreasing sequence of subsets needn't be the corresponding limit of diameters even if the sets are closed and bounded. For instance, consider an infinite dimensional \NLS containing orthonormal vectors $e_1, e_2, \ldots$. Take $F_i := \{e_i, e_{i + 1}, \ldots\}$. Then each $\delta(F_i) = \sqrt 2$, and still the intersection is empty. However, there is one case where we \emph{can} say something:
 		
 		\begin{prp}
 			Let $F_1\supseteq F_2\supseteq\cdots$ be closed subsets of a metric space with $F_1$ being compact. Then $\delta(\bigcap_i F_i) = \lim_i\delta(F_i)$.
@@ -135,5 +538,5 @@
 	\end{rmk}
 	
 	\begin{cor}
-		If countably many closed subsets of a complete metric space unite to the whole space, then one of them has a nonemtpy interior.
+		If countably many closed subsets of a nonempty complete metric space unite to the whole space, then one of them has a nonemtpy interior.
 	\end{cor}
