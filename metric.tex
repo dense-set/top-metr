@@ -9,6 +9,8 @@
 	\begin{assmplist}
 		\item $X$, $Y$ will denote metric spaces.
 		
+		\item $E$ will be reserved for generic sets.
+		
 		\item Subsets of metric spaces will be seen as metric subspaces.
 		
 		\item For $x\in X$ and $r > 0$, we'll use
@@ -21,6 +23,8 @@
 		\item A metric space will also be considered a topological space under the induced topology.
 		
 		\item The diameter of a subset $A$ of a metric space will be denoted by $\delta(A)$.
+		
+		\item For any $f, g\in X^E$, we'll define $d_\infty(f, g) := \sup_{e\in E}d(f(e), g(e))$.
 	\end{assmplist}
 \end{conv}
 
@@ -469,21 +473,50 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 	\end{rmk}
 	
 	
-	\begin{prp}[Uniform convergence preserves continuity]
-		Let $E$ be a topological space and $E_1\subseteq E$. Let $f_n\colon E_1\to X$ converge uniformly to $f$. Let $c\in\ell(E_1)$ with each $\lim_{x\to c} f_n(x)$ existent. Then
-		\[
-		\lim_{x\to c} f(x) = \lim_{n\to\infty}\lim_{x\to c}f_n(x)
-		\]
-		for each $c\in\ell(E_1)$.\footnote{Note that metric spaces are Hausdorff so that limits are unique.}
+	
+	
+\subsection{Uniform convergence}
+
+	Note that $d_\infty$ ``almost'' forms a metric on $X^E$ except that it can take infinite values. Thus, if $\mathscr F\subseteq X^E$ is such that $d_\infty(f, g) < +\infty$ for all $f, g\in \mathscr F$, then $d_\infty$ defines a metric on $\mathscr F$. It's easily seen that convergence under this metric coincides with uniform convergence.
+	
+	
+	\begin{prp}
+		Let $E$ be a topological space and $E_1\subseteq E$. Let $(f_n)$ be Cauchy in $X^{E_1}$.\footnote{
+			That is, $d_\infty(f_m, f_n)\to 0$ as $m, n\to\infty$.
+		} and $c\in E_1'$ with $f_n(x)\to L_n$ as $x\to c$. Then \tfh:
+		\begin{mylist}
+			\item $(L_n)$ is Cauchy.
+			
+			\item If $f_n\to f$ uniformly and $L_n\to L$, then $f(x)\to L$ as $x\to c$.
+		\end{mylist}
 	\end{prp}
 	
 	\begin{proof}
-		
+		\begin{mylist}
+			\item Let $\epsilon > 0$. Since \ul{$(f_n)$ Cauchy}, take $N$ such that $d_\infty(f_m, f_n) < \epsilon$ for all $m, n\ge N$. Now, let $m, n\ge N$. Since \ul{$f_m(x)\to L_m$ and $f_n(x)\to L_n$ as $x\to c$}, let $U$ be an \onbd of $c$ such that $d(f_m(x), L_m), d(f_n(x), L_n) < \epsilon$ for each $x\in E_1\cap U\setminus\{c\}$. Then
+			\begin{alignat*}{2}
+				d(L_m, L_n)
+				& \le d(L_m, f_m(x)) + d(f_m(x), f_n(x)) \\
+				& \phantom{{}\le d(L_m, f_m(x))} + d(f_n(x), L_n) & \text{(taking $x\in E_1$)}\\
+				& < 3\epsilon\text, & \text{(taking $x\in U\setminus \{c\}$ as well)}
+			\end{alignat*}
+			where taking $x\in E_1\cap U\setminus\{c\}$ is allowed since \ul{$c\in E_1'$}.
+			
+			
+			\item Let $\epsilon > 0$. Since \ul{$f_n\to f$} and \ul{$L_n\to L$}, take $N$ such that $d_\infty(f_N, f), d(L_N, L) < \epsilon$. Since \ul{$f_N(x)\to L_N$ as $x\to c$}, take an \onbd $U$ of $c$ such that $f_N(U\setminus\{c\})\subseteq B_\epsilon(L_N)$. Now, for $x\in E_1\cap U\setminus\{c\}$, we have
+			\begin{alignat*}{2}
+				d(f(x), L)
+				& \le d(f(x), f_N(x)) + d(f_N(x), L_N) + d(L_N, L)\\
+				& < 3\epsilon\text. \tag*{\qedhere}
+			\end{alignat*}
+		\end{mylist}
 	\end{proof}
 	
-	\begin{rmk}
-		content
-	\end{rmk}
+	\begin{cor}
+		Uniform convergence preserves continuity.
+	\end{cor}
+	
+	\noindent This is \ofc not true of just pointwise convergence.
 	
 	
 	
