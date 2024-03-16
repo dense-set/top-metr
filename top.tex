@@ -62,12 +62,76 @@
 			
 			\item Let $c$ be a limit point of $E$ and suppose $f(x)\to L_1, L_2$ as $x\to c$ for distinct $L_1$, $L_2$. Let $V_i$'s be opens separating $L_i$'s for $i = 1, 2$ (since \uline{$Y$ Hausdorff}). Now, take \onbd{s} $U_i$'s of $c$ in $X$ such that $f(E\cap U_i\setminus\{c\})\subseteq V_i$. Now, $E\cap U_1\cap U_2\setminus\{c\}\ne\emptyset$ set \uline{$c$ is a limit point of $E$} which violates disjointness of $V_i$'s.
 			
-			\item Since if $c\in E$, then for any $X_1, X_2\supseteq E$, if $U_1$ is an \onbd of $c$ in $X_i$, then $E\cap U_1$, being an \onbd of $c$ in $E$, is equal to $E\cap U_2$ for some \onbd $U_2$ of $c$ in $X_2$.
+			\item Since if $c\in E$, then for any $X_1, X_2\supseteq E$, if $U_1$ is an \onbd of $c$ in $X_i$, then $E\cap U_1$, being an \onbd of $c$ in $E$, is equal to $E\cap U_2$ for some \onbd $U_2$ of $c$ in $X_2$.\qedhere
 		\end{mylist}
 	\end{proof}
 	
 	\begin{rmk}
 		This allows to use $\lim_{x\to c} f(x)$ notation in case $f$ has a Hausdorff codomain and $c$ is a limit point of the domain in the ambient space.
+	\end{rmk}
+	
+	
+	\begin{lem}[Limits and subspaces]\label{LEM: lims and subspaces}
+		Assume the following:
+		\begin{assmplist}
+			\item $f\colon E\to Y$ where $E\subseteq X$.
+			\item $c\in A\subseteq X$ and $L\in Y$.
+			\item $f|\colon E\cap A\to Y$.
+		\end{assmplist}
+		Then \tfh:
+		\begin{mylist}
+			\item $f(x)\to L$ as $x\to c$ in $X$ $\implies$ $f|(x)\to L$ as $x\to c$ in $A$.
+			
+			\item\label{LEMii: lims and subspaces} The converse holds if $A$ is open.
+		\end{mylist}
+	\end{lem}
+	
+	\begin{proof}
+		\begin{mylist}
+			\item Let $V$ be an \onbd of $L$. Take an \onbd $U$ of $c$ in $X$ such that $f(U\cap E\setminus\{c\})\subseteq V$. Then $U\cap A$ is an \onbd of $c$ in $A$ with $f|(U\cap E\cap A\setminus\{c\})\subseteq V$.
+			
+			\item Let $A$ be open. Let $V$ be an \onbd of $L$. Then take an \onbd $U$ of $c$ in $A$ such that $f|(U\cap E\setminus\{c\})\subseteq V$. Now, just note that $U$ is open in $X$ as well since \uline{$A$ is open}.
+			\qedhere
+		\end{mylist}
+	\end{proof}
+	
+	\begin{rmk}
+		Necessity of $A$ being open in \ref{LEMii: lims and subspaces} is clear by taking $Y$ to be Hausdorff containing at least two points, $A$ to be a singleton comprising of a limit point of $E$ and taking $f$ appropriately (constant function works).
+	\end{rmk}
+	
+	
+	\begin{prp}[Pointwise pasting]
+		Assume the following:
+		\begin{assmplist}
+			\item $f\colon E\to Y$ where $E\subseteq X$.
+			\item $X$ is the union of finitely many closed $F_i\subseteq X$.
+			\item $f|_i : E\cap F_i\to Y$.
+			\item $c\in X$ and $L\in X$.
+			\item If $c\in F_i$, then $f_i(x)\to L$ as $x\to c$ in $F_i$.
+		\end{assmplist}
+		Then $f(x)\to L$ as $x\to c$ in $X$.
+	\end{prp}
+	
+	\begin{proof}
+		Let $V$ be an \onbd of $L$. Say $c\in F_i$'s and $c\notin F_j$'s. Thus, take \onbd{s} $U_i\cap F_i$ of $c$ in $F_i$ ($U_i$ open in $X_i$) such that $f|_i(U_i\cap E\cap F_i\setminus\{c\})\subseteq V$. Set $U := \bigl( \bigcap_i U_i \bigr)\cap \bigl(X\setminus \bigcup_j F_j\bigr)$\footnote{
+			The second set in the union is motivated from the need to have $\bigcap_j X\setminus F_j$.
+		} which is open since $F_j$'s are \uline{closed} and $i$ and $j$'s are \uline{finitely many}. Thus, $U$ is an \onbd of $c$ in $X$ with $f(U\cap E\setminus\{c\}) 
+		= \bigl( \bigcup_i f(U\cap E\cap F_i\setminus\{c\}) \bigr)
+			\cup \bigl( \bigcup_j f(U\cap E\cap F_j\setminus\{c\}) \bigr)
+		\subseteq V\cup \emptyset = V$.
+	\end{proof}
+	
+	\begin{rmk}
+		\begin{mylist}
+			\item Necessity of finitely many closed sets: Consider $f\colon \mathbb R^2\to\mathbb R$ given by $f(x, y) := x^2y/(x^4 + y^2)$ for $(x, y)\ne (0, 0)$ and $f(0, 0) := 0$. Along all the straight lines through origin (which are closed), $f(x)\to 0$ and yet $f$ has no limit at $0$.\footnote{
+				Consider evaluating along $y = mx^2$.
+			}
+			
+			A much simpler example is to consider an infinite $X$ having at least one limit point, the singleton containing which is closed, and taking the codomain to be a Hausdorff space with at least two points.
+			
+			%====!!!!====%
+			\item Necessity of all closed:
+		\end{mylist}
 	\end{rmk}
 
 
@@ -441,6 +505,19 @@
 	
 
 \section{Separation Axioms}
+
+	\begin{lem}[$T_1$ spaces]\label{LEM: t1 spaces}
+		In a space, singletons are closed $\iff$ any two distinct points can be separated by open sets that don't contain the other.
+	\end{lem}
+	
+	\begin{proof}
+		Let the space in question be $X$.
+		
+		``$\Rightarrow$'': Let $x$, $y$ be distinct. Then $X\setminus\{y\}$ and $X\setminus\{y\}$ separate $x$, $y$ as required.
+		
+		``$\Leftarrow$'': Let $x\in X$. We show that $X\setminus\{x\}$ is open, which follows easily.
+	\end{proof}
+	
 
 	\begin{prp}\label{PRP: cont func into Hausdorff uniquely by its vals on dense subset}
 		A continuous function taking values in a Hausdorff codomain is completely determined by its values on a dense subset of the domain.
