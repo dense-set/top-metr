@@ -37,7 +37,7 @@
 
 
 % add more stuff
-\section{Limits and Continuity}
+\section{Functional Limits and Continuity}
 
 	Let $E\subseteq X$ and $f\colon E\to Y$. Then for any $c\in X$ and $L\in Y$, we write \defn{$f(x)\to L$ as $x\to c$ in $X$} iff for every \onbd $V$ of $L$ in $Y$, there exists an \onbd $U$ of $c$ in $X$ such that $f(E\cap U\setminus\{c\})\subseteq V$. Note that ``in $X$'' is crucial and can't be dropped: Consider $\id$ on $(0, 1)$. Take $X_1$ to be the disjoint union topology of $(0, 1)$ and $\{1\}$ and $X_2 := (0, 1]$ under the subspace topology. Then $1$ is isolated in $X_1$ and thus $f(x)\to L$ for each $L\in (0, 1)$ as $x\to 1$ in $X_1$ (see \ref{LEMi: lims at isolated and lim pts} of \myRef{LEM: lims at isolated and lim pts}). \Otoh, $f(x)\to 1$ only as $x\to 1$ in $X_2$ since $1$ is a limit point of $(0, 1)$ in $X_2$ (see \ref{LEMii: lims at isolated and lim pts} of \myRef{LEM: lims at isolated and lim pts}).
 	
@@ -99,40 +99,81 @@
 		Necessity of $A$ being open in \ref{LEMii: lims and subspaces} is clear by taking $Y$ to be Hausdorff containing at least two points, $A$ to be a singleton comprising of a limit point of $E$ and taking $f$ appropriately (constant function works).
 	\end{rmk}
 	
+	\begin{cor}
+		Restricting the domain of continuous functions preserves continuity.
+	\end{cor}
+	
 	
 	\begin{prp}[Pointwise pasting]
 		Assume the following:
 		\begin{assmplist}
 			\item $f\colon E\to Y$ where $E\subseteq X$.
-			\item $X$ is the union of finitely many closed $F_i\subseteq X$.
-			\item $f|_i : E\cap F_i\to Y$.
+			\item $X$ is the union of finitely many $A_i\subseteq X$.
+			\item $f|_i : E\cap A_i\to Y$.
 			\item $c\in X$ and $L\in X$.
-			\item If $c\in F_i$, then $f_i(x)\to L$ as $x\to c$ in $F_i$.
+			\item If $c\in A_i$, then $f|_i(x)\to L$ as $x\to c$ in $A_i$.
+			\item Either $c\in\bigcap_i A_i$, or each $A_i$ is closed.
 		\end{assmplist}
 		Then $f(x)\to L$ as $x\to c$ in $X$.
 	\end{prp}
 	
 	\begin{proof}
-		Let $V$ be an \onbd of $L$. Say $c\in F_i$'s and $c\notin F_j$'s. Thus, take \onbd{s} $U_i\cap F_i$ of $c$ in $F_i$ ($U_i$ open in $X_i$) such that $f|_i(U_i\cap E\cap F_i\setminus\{c\})\subseteq V$. Set $U := \bigl( \bigcap_i U_i \bigr)\cap \bigl(X\setminus \bigcup_j F_j\bigr)$\footnote{
-			The second set in the union is motivated from the need to have $\bigcap_j X\setminus F_j$.
-		} which is open since $F_j$'s are \uline{closed} and $i$ and $j$'s are \uline{finitely many}. Thus, $U$ is an \onbd of $c$ in $X$ with $f(U\cap E\setminus\{c\}) 
-		= \bigl( \bigcup_i f(U\cap E\cap F_i\setminus\{c\}) \bigr)
-			\cup \bigl( \bigcup_j f(U\cap E\cap F_j\setminus\{c\}) \bigr)
+		Let $V$ be an \onbd of $L$. Say $c\in A_i$'s and $c\notin A_j$'s. Thus, take \onbd{s} $U_i\cap A_i$ of $c$ in $A_i$ ($U_i$ open in $X_i$) such that $f|_i(U_i\cap E\cap A_i\setminus\{c\})\subseteq V$. Set $U := \bigl( \bigcap_i U_i \bigr)\cap \bigl(X\setminus \bigcup_j A_j\bigr)$\footnote{
+			The second set in the union is motivated from the need to have $\bigcap_j X\setminus A_j$.
+		} which is open since $i$ and $j$'s are \uline{finitely many} and since one of \tfh{s}:
+		\begin{mylist}
+			\item \uline{$c$ is in each $A_k$} so that there are no $j$'s.
+			\item \uline{Each $A_j$ is closed}.
+		\end{mylist}
+		Thus, $U$ is an \onbd of $c$ in $X$ with $f(U\cap E\setminus\{c\}) 
+		= \bigl( \bigcup_i f(U\cap E\cap A_i\setminus\{c\}) \bigr)
+			\cup \bigl( \bigcup_j f(U\cap E\cap A_j\setminus\{c\}) \bigr)
 		\subseteq V\cup \emptyset = V$.
 	\end{proof}
 	
 	\begin{rmk}
 		\begin{mylist}
-			\item Necessity of finitely many closed sets: Consider $f\colon \mathbb R^2\to\mathbb R$ given by $f(x, y) := x^2y/(x^4 + y^2)$ for $(x, y)\ne (0, 0)$ and $f(0, 0) := 0$. Along all the straight lines through origin (which are closed), $f(x)\to 0$ and yet $f$ has no limit at $0$.\footnote{
+			\item Necessity of finitely many $A_i$'s: 
+			Consider the function $f\colon \mathbb R^2\to\mathbb R$ given by $f(x, y) := x^2y/(x^4 + y^2)$ for $(x, y)\ne (0, 0)$ and $f(0, 0) := 0$. Along all the straight lines through origin (which are closed), $f(x)\to 0$ and yet $f$ has no limit at $(0, 0)$.\footnote{
 				Consider evaluating along $y = mx^2$.
-			}
+			} Note that here, $c\in \bigcap_i A_i$ \emph{and} each $A_i$ is closed.
 			
-			A much simpler example is to consider an infinite $X$ having at least one limit point, the singleton containing which is closed, and taking the codomain to be a Hausdorff space with at least two points.
+			A much simpler example is to consider an infinite $X$ having at least one limit point and in which singletons are closed,\footnote{
+				Such spaces are precisely the $T_1$ spaces. (See \myRef{LEM: t1 spaces}.)
+			} and taking the codomain to be a Hausdorff space with at least two points.
 			
-			%====!!!!====%
-			\item Necessity of all closed:
+			
+			\item Necessity of ``$c\in\bigcap_i A_i$, or each $A_i$ closed'': Consider $f\colon \mathbb{R\to R}$ given by $f(x) := 0$ for $x < 0$ and $f(x) := 1$ for $x\ge 0$.
 		\end{mylist}
 	\end{rmk}
+	
+	\begin{cor}[Pasting lemma]
+		If the domain is a finite union of closed sets on each of which the function's restriction is continuous, then the function is continuous.
+	\end{cor}
+	
+	
+	\begin{lem}\label{LEM: func lim => seq lims}
+		Functional limits $\implies$ sequential limits.
+	\end{lem}
+	
+	\begin{rmk}
+		For taking sequential limits of a function at $c$, remember to have the sequence not contain $c$!
+	\end{rmk}
+	
+	\begin{proof}[Proof of \myRef{LEM: func lim => seq lims}]
+		Let $f\colon E\to X$ where $E\subseteq X$ be such that $f(x)\to L$ as $x\to c$ for $c\in X$ and $L\in Y$. Let $x_i\to c$ for $(x_i)\in E\setminus\{c\}$. We show that $f(x_i)\to L$:
+		\begin{subproof}
+			Let $V$ be an \onbd of $L$. Take an \onbd $U$ of $c$ in $X$ such that $f(U\cap E\setminus\{c\})\subseteq V$. Now, $(x_i)$ eventually lies in $U$ and thus in $U\cap E\setminus\{c\}$ $\wimplies$ $(f(x_i))$ eventually lies in $V$.
+		\end{subproof}
+	\end{proof}
+	
+	\begin{rmk}
+		The converse folds for first-countable domains, but is false in general: See \myRef{PRP: continuity and closure in first countable} and the remark afterward.
+	\end{rmk}
+	
+	\begin{cor}
+		Continuity $\implies$ sequential continuity.
+	\end{cor}
 
 
 
@@ -634,7 +675,7 @@
 	\begin{prp}\label{PRP: continuity and closure in first countable}
 		\leavevmode
 		\begin{mylist}
-			\item For a first countable domain, sequential continuity $\implies$ continuity.
+			\item\label{PRPi: continuity and closure in first countable} For a first countable domain, sequential limits $\implies$ functional limits. As a result, for first countable domains, sequential continuity $\implies$ continuity.
 			
 			\item For a first countable space, closure is precisely the set of limits of sequences.
 		\end{mylist}
@@ -642,8 +683,12 @@
 	
 	\begin{proof}
 		\begin{mylist}
-			\item Let $f\colon X\to Y$ be sequentially continuous at $c\in X$ with $X$ being first countable. Suppose $f$ is not continuous at $c$. Thus, take an \onbd $V$ of $f(c)$ such that $f(U)$ spills outside $V$ for each \onbd $U$ of $c$. Let $B_n$'s form a local base at $c$ and choose for each $n$,\myMargin{In both, \CC's usage can be avoided if $X$ is separable.}
-			an $x_n\in B_n$ such that $f(x_n)\notin V$. But then $f(x_n)\not\to f(c)$ despite $x_n\to c$.
+			\item Let $f\colon E\to Y$ where $E\subseteq X$. Let $c\in X$ and $L\in Y$ such that $f(x_i)\to L$ whenever $x_i\to c$ for $(x_i)\in E\setminus\{c\}$. We show that $f(x)\to L$ as $x\to c$ in $X$:
+			\begin{subproof}
+				Suppose not. Then take an \onbd $V$ of $L$ such that $f(U\cap E\setminus\{c\})$ spills outside $V$ for any \onbd $U$ of $c$ in $X$. Let $B_n$'s form a decreasing local base at $c$ in $X$ (as $X$ is \uline{first countable}). Choose\myMargin{
+					In both, \CC's usage can be avoided if $X$ is separable.
+				} $x_i\in B_n\cap E\setminus\{c\}$ (since the $f$-image is nonempty). Then $(x_i)\in E\setminus\{c\}$ converges to $c$ and yet $f(x_i)\not\to L$, a contradiction.
+			\end{subproof}
 			
 			\item Let $c\in\clos A\setminus A$ and let $B_n$'s form a local base at $c$. Then for each $n$, choose $x_n\in B_n\cap A$. Then $(x_n)$ is a sequence in $A$ converging to $c$.\qedhere
 		\end{mylist}
