@@ -35,11 +35,25 @@
 
 \section{General}
 	
-	The triangle inequality immediately yields:
-	
 	\begin{lem}
-		Metric is continuous. Further, if $E\subseteq X$, then $x\mapsto d(x, E)$ is also continuous.
+		\begin{mylist}
+			\item Metric is Lipschitz continuous. 
+			
+			\item If $E\subseteq X$ is nonempty, then $x\mapsto d(x, E)$ is also Lipschitz continuous.\footnote{
+				For Lipschitz continuity, the codomain space must be a metric space and thus we must not include $+\infty$ in the codomain. Taking $E\ne\emptyset$ ensure this.
+			}
+		\end{mylist}
 	\end{lem}
+	
+	\begin{proof}
+		\begin{mylist}
+			\item Use the triangle inequality with the $1$-norm metric on $X\times X$. (See \myRef{PRP: finite prod of metr spaces is metrizable}.)
+			
+			\item For any $e\in E$, we have $d(x, e)\le d(x, y) + d(y, e)$ so that taking infimum over $e$ yields $d(x, E)\le d(x, y) + d(y, E)$\myMargin{
+				Do stuff on $\mathbb R^*$. Also that bit on monotone functions and taking $\sup$'s.
+			} $\wimplies d(x, E) - d(y, E)\le d(x, y)$ (note that $d(x, E), d(y, E) < +\infty$ since \uline{$E\ne \emptyset$}).\qedhere
+		\end{mylist}
+	\end{proof}
 	
 	\begin{rmk}
 		Note that $d(x, \emptyset) = +\infty$ for all $x$.
