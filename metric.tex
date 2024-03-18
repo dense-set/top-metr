@@ -78,7 +78,19 @@
 			\end{subproof}
 		\end{mylist}
 	\end{proof}
-
+	
+	
+	\begin{lem}
+		The subspace topology on a subset of a metric space is precisely the one induced by the inherited metric.
+	\end{lem}
+	
+	\begin{proof}
+		Let $E\subseteq X$. Let $\tau_s$, $\tau_m$ be the respective topologies. That $\tau_m\subseteq \tau_s$ is clear since the balls of $E$ are precisely the balls of $X$ intersected with $E$. We show $\tau_s\subseteq \tau_m$:
+		\begin{subproof}
+			Consider $B_r(x)\cap E$ for $x\in X$. Let $y\in B_r(x)\cap E$. Take $B_\epsilon(y)\subseteq B_r(x)\wimplies y\in B_\epsilon(y)\cap E\subseteq B_r(x)\cap E$.\qedhere
+		\end{subproof}
+	\end{proof}
+	
 	Let $E\subseteq X$ and $x\in X$. Then a point $y\in E$ is called \defn{a point of best approximation} for $x$ in $Y$ iff $d(x, y) = d(x, E)$.
 	
 	
@@ -146,39 +158,12 @@
 	\end{rmk}
 	
 	
-	\begin{lem}\label{LEM: any metric is topologically equiv to a bdd metric}
-		Any metric is topologically equivalent to a bounded metric which preserves the Cauchy sequences.
-	\end{lem}
-	
-	\begin{proof}
-		Let $f\colon[0, +\infty)\to [0, 1)$ be a strictly increasing bijection which is subadditive, \ie, $f(x + y)\le f(x) + f(y)$,\footnote{
-			This gives another reason why $f$ is continuous: $f(x + \delta) - f(x)\le f(\delta) \which < \epsilon$ if $\delta < f^{-1}(\epsilon)$.
-		} for instance $x\mapsto x/(1 + x)$. Then $d'(x, y) := f(d(x, y))$ defines a bounded metric on $X$:
-		\begin{prooflist}
-			\item $d'(x, y) = 0\iff d(x, y) = f^{-1}(0)\which = 0$ (since \uline{$f$ a strictly increasing bijection}) $\iff x = y$.
-			
-			\item $d'$ is symmetric because $d$ is.
-			
-			\item $d'(x, y) + d'(y, z) = f(d(x, y)) + f(d(y, z))\ge f(d(x, y) + d(y, z))$ (since \uline{$f$ is subadditive}) $\ge f(d(x, z))$ (since \uline{$f$ is increasing}) $ = d'(x, z)$.
-		\end{prooflist}
-		
-		We now show the topological equivalence:
-		\begin{prooflist}
-			\item Consider $B_r(x)$. We want an $\epsilon > 0$ such that $B'_\epsilon(x)\subseteq B_r(x)$. Let $d'(y, x) < \epsilon$, \ie, $f(d(y, x)) < \epsilon$. Take \uwave{$\epsilon < 1$}, so that $d(y, x) < f^{-1}(\epsilon)$ (since inverse of \uline{strictly increasing $f$} is strictly increasing as well). Thus, it suffices to have $f^{-1}(\epsilon) < r\wimpliedby\uwave{\epsilon < f(r)}$. Thus any $0 < \epsilon < \min(1, f(r))$ works (note that $f(r) > f(0) = 0$).
-			
-			\item Consider $B'_r(x)$. \Wlogg, take $r < 1$. We find an $\epsilon > 0$ such that $B_\epsilon(x)\subseteq B'_r(x)$. Let $d(y, x) < \epsilon\wimplies d'(y, x) < f(\epsilon)$ (as \uline{$f$ is strictly increasing}). Thus it suffices to have $f(\epsilon) < r\wimpliedby\uwave{\epsilon < f^{-1}(r)}$ (note that \uline{$r < 1$}). Thus it suffices to have $0 < \epsilon < f^{-1}(r)$.\qedhere
-		\end{prooflist}
-		
-		That the Cauchy sequences are the same is straightforward: Since \uline{$f$ is a strictly monotonic bijection}, $f$ and $f^{-1}$ are continuous. Thus $d(x_n, y_n)\to 0\iff f(d(x_n, y_n))\to 0\iff d'(x_n, y_n)\to 0$.
-	\end{proof}
-	
-	
 	\begin{prp}\label{PRP: countable prd's of metr spaces are metrizable}
 		On countable product of metric spaces is metrizable such that the analogues of \ref{PRPi: finite prod of metr spaces is metrizable} and \ref{PRPii: finite prod of metr spaces is metrizable} of \myRef{PRP: finite prod of metr spaces is metrizable} hold.
 	\end{prp}
 	
 	\begin{proof}
-		The finite case follows from \myRef{PRP: finite prod of metr spaces is metrizable}. Thus, consider the metric spaces $X_1, X_2, \ldots$, and set $X := \prod_i X_i$. Because of \myRef{LEM: any metric is topologically equiv to a bdd metric}, we may \wlogg assume that each $d_i$ is bounded by $1$ which allows to define
+		The finite case follows from \myRef{PRP: finite prod of metr spaces is metrizable}. Thus, consider the metric spaces $X_1, X_2, \ldots$, and set $X := \prod_i X_i$. Because of \myRef{PRP: any metric is topologically equiv to a bdd metric}, we may \wlogg assume that each $d_i$ is bounded by $1$ which allows to define
 		\[
 		d(x, y) := \sum_{i = 1}^\infty \frac{d_i(x_i, y_i)}{2^i}
 		\]
@@ -219,7 +204,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 	\end{lem}
 	
 	
-	\begin{lem}
+	\begin{lem}\label{LEM: totally bdd iff each seq has a Cauchy subseq}
 		In a metric space, each sequence has a Cauchy subsequence $\iff$ the space is totally bounded.
 	\end{lem}
 	
@@ -229,7 +214,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 		an infinite subset $I_{n + 1}\subseteq I_n$ such that $\{x_i : i\in I_{n + 1}\}$ lies in a ball of diameter $1/(n + 1)$. (This is possible since the the space is \uline{totally bounded}.) Now, choose $i_n\in I_n$ such that $(i_n)$ is increasing. Then $(x_{i_n})_n$ forms a Cauchy sequence, for for $n > m\ge N$, we have $d(x_{i_m}, x_{i_n}) < 1/N$.
 		
 		``$\Leftarrow$'': Suppose $X$ is not totally bounded so that take an $\epsilon > 0$ such that no finitely many balls of radius $\epsilon$ can ever cover $X$. Let $x_1\in X$.\footnote{
-			Note that $X$ has got to be enoenmtpy.}
+			Note that $X$ has got to be nonenmtpy.}
 		Having chosen $x_1, \ldots, x_n$, choose\myMargin{
 			\DC used.}
 		$x_{n + 1}\in X\setminus\bigcup_{i = 1}^n B_\epsilon(x_i)$. Then $(x_i)$ is non-Cauchy sequence, for $d(x_i, x_j)\ge \epsilon$ for all $i\ne j$.
@@ -257,7 +242,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 	
 	\begin{thm}\label{THM: completion of metric spaces}
 		Each metric space admits a completion, which is unique up to bi-isometries.\footnote{
-			A bi-isometry is a bijective isometry whose inverse is also an isometry.
+			A bi-isometry is a bijective isometry whose inverse is also an isometry. Thus, bi-isometries are precisely bijective isometries.
 		}
 	\end{thm}
 	
@@ -268,7 +253,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 		\begin{mylist}
 			\item If $(x_i)$ is Cauchy and $(\alpha_i)\in\mathbb R^+$, then there exists a subsequence $(x_{i_j})$ such that for each $N$, we have $d(x_{i_j}, x_{i_k}) < \alpha_N$ whenever $j, k\ge N$.
 			
-			\item A Cauchy sequence converges iff any of its subsequence converges.
+			\item A Cauchy sequence converges $\iff$ any of its subsequence converges.
 		\end{mylist}
 	\end{lem}
 	
@@ -409,14 +394,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 	
 \subsection{Metric equivalences}
 
-First, an easy lemma:
-
-	\begin{lem}
-		Uniformly equivalent metrics preserve uniform and Lipschitz continuities.
-	\end{lem}
-	
-
-	\begin{prp}
+	\begin{prp}\label{PRP: implications from unif equiv to topo equi}
 		For metrics on a given set, we have:
 		\begin{center}
 			Uniform equivalence $\implies$ $\id$ is uniformly continuous in both directions $\implies$ same Cauchy sequences $\implies$ same convergence $\iff$ topological equivalence.
@@ -424,7 +402,7 @@ First, an easy lemma:
 	\end{prp}
 	
 	\begin{proof}
-		The first two implications are trivial and the last follows from \myRef{COR: first countable T1 topologies via their sequences}. For the penultimate, just note that $x_i\to c$ iff $x_1, c, x_2, c, \ldots$ is Cauchy.
+		The first two implications are trivial and the last follows from \myRef{COR: first countable T1 topologies via their sequences}. For the penultimate, just note that $x_i\to c$ $\iff$ $x_1, c, x_2, c, \ldots$ is Cauchy.
 	\end{proof}
 	
 	\begin{rmk}
@@ -465,16 +443,99 @@ First, an easy lemma:
 		\end{dgrsProof}
 	\end{dgrs}
 	
+	
+	\begin{prp}\label{PRP: any metric is topologically equiv to a bdd metric}
+		Any metric is topologically equivalent to a bounded metric which preserves Cauchy sequences and total boundedness both ways.
+	\end{prp}
+	
+	\begin{proof}
+		Let $f\colon[0, +\infty)\to [0, 1)$ be a strictly increasing bijection which is subadditive, \ie, $f(x + y)\le f(x) + f(y)$,\footnote{
+			This gives another reason why $f$ is continuous: $f(x + \delta) - f(x)\le f(\delta) \which < \epsilon$ if $\delta < f^{-1}(\epsilon)$.
+		} for instance $x\mapsto x/(1 + x)$. Then $d'(x, y) := f(d(x, y))$ defines a bounded metric on $X$:
+		\begin{prooflist}
+			\item $d'(x, y) = 0\iff d(x, y) = f^{-1}(0)\which = 0$ (since \uline{$f$ a strictly increasing bijection}) $\iff x = y$.
+			
+			\item $d'$ is symmetric because $d$ is.
+			
+			\item $d'(x, y) + d'(y, z) = f(d(x, y)) + f(d(y, z))\ge f(d(x, y) + d(y, z))$ (since \uline{$f$ is subadditive}) $\ge f(d(x, z))$ (since \uline{$f$ is increasing}) $ = d'(x, z)$.
+		\end{prooflist}
+		
+		Topological equivalence and preservation of total boundedness will follow if preservation of Cauchy sequences is established (\myRef{PRP: implications from unif equiv to topo equi} and \resp \myRef{LEM: totally bdd iff each seq has a Cauchy subseq}).
+		
+		That the Cauchy sequences are the same follows by continuity\footnote{
+			Only continuity at $0$ is required.
+		} of $f$ and $f^{-1}$ and the fact that $f(0) = 0 = f^{-1}(0)$ (due to the \uline{strict monotonicity and bijectivity of $f$}).
+	\end{proof}
+	
+	\begin{rmk}
+		Another choice of $f$ could have been $x\mapsto \min(x, 1)$.
+	\end{rmk}
+	
+	
+	The following is an easy lemma:
+	
+	\begin{lem}
+		Uniformly equivalent metrics preserve the following continuities: Usual, Cauchy-regular, uniform, Lipschitz.
+	\end{lem}
+	
+	\begin{rmk}
+		Note that just the topological equivalence (or even same Cauchy sequences) is not enough to preserve uniform continuity of even Lipschitz functions:\myMargin{
+			What about Cauchy-regularity of Lipschitz?
+		} COMPLETE THIS! \href{https://math.stackexchange.com/questions/1963784/uniform-continuity-preserved-with-equivalent-metrics}{SE link.}
+	\end{rmk}
+	
 
 
 
 \subsection{Stronger forms of continuity}
 	
-
+	\begin{lem}
+		Uniformly continuous functions preserve total boundedness.
+	\end{lem}
+	
+	\begin{proof}
+		Let $f\colon X\to Y$ be uniformly continuous with $X$ being totally bounded. Let $\epsilon > 0$. Due to \uline{uniform continuity}, take $\delta > 0$ such that $d(f(x), f(y)) < \epsilon$ whenever $d(x, y) < \delta$. Due to \uline{total boundedness}, let $B_\delta(x_1), \ldots, B_\delta(x_n)$ cover $X$. Now, $f(X) = \bigcup_i f(B_\delta(x_i))\subseteq \bigcup_i B_\epsilon(f(x_i))$.
+	\end{proof}
+	
+	\begin{rmk}
+		Boundedness needn't be preserved however: Consider $\id\colon(X, d_\text{discr})\to(X, d)$ where $d$ is any unbounded metric on $X$.
+	\end{rmk}
+	
+	
+	\begin{prp}\label{PRP: cont funcs on compact are unif cont}
+		Continuous functions on compact sets are uniformly continuous.
+	\end{prp}
+	
+	\begin{proof}
+		Let $f\colon X\to Y$ be continuous with $X$ being compact. Let $\epsilon > 0$. For each $x\in X$, choose $\delta_x > 0$ such that $f(B_{\delta_x}(x))\subseteq B_\epsilon(f(x))$.\myMargin{No \AC needed!}
+		Let $B_{\delta_{x_1}/2}(x_1), \ldots, B_{\delta_{x_n}/2}(x_n)$ cover $X$ (since \uline{$X$ is compact}). Now, any $x, y\in X$ lie in some $B_{\delta_{x_i}}(x_i)$ whenever $d(x, y) < \min(\delta_{x_1}, \ldots, \delta_{x_n})/2\wimplies d(f(x), f(y)) < 2\epsilon$.
+	\end{proof}
+	
+	\begin{rmk}
+		To see the necessity of compact domain, consider $x\mapsto 1/x$ on $\mathbb R\setminus\{0\}$.
+	\end{rmk}
+	
+	
 	\begin{prp}
+		$f$ is uniformly continuous $\iff$ $d(f(x_n), f(y_n))\to 0$ whenever $d(x_n, y_n)\to 0$.
+	\end{prp}
+	
+	\begin{proof}
+		Consider $f\colon X\to Y$.
+		
+		``$\Rightarrow$'': Let $f$ be uniformly continuous. Let $d(x_n, y_n)\to 0$ in domain. Let $\epsilon > 0$. Take $\delta> 0$ such that $d(f(x), f(y)) < \epsilon$ whenever $d(x, y) < \delta$. Take $N$ such that for each $n\ge N$, we have $d(x_n, y_n) < \delta\wimplies d(f(x_n), f(y_n)) < \epsilon$.
+		
+		``$\Leftarrow$'': If $f$ is not not uniformly continuous, then we may take an $\epsilon > 0$ and for each $n$, choose\myMargin{
+			\CC used!
+		}
+		$x_n, y_n\in E$ such that $d(x_n, y_n) < 1/n$ and yet $d(f(x_n), f(y_n)) \ge \epsilon$.
+	\end{proof}
+	
+
+	\begin{prp}[Interaction of continuities]
 		\leavevmode
 		\begin{mylist}
-			\item $f$ is uniformly continuous $\iff$ $d(f(x_n), f(y_n))\to 0$ whenever $d(x_n, y_n)\to 0$.
+			\item Lipschitz $\implies$ uniform continuity.
 			
 			\item Uniform continuity on every totally bounded subset of the domain $\iff$ Cauchy-regularity.
 			
@@ -484,14 +545,7 @@ First, an easy lemma:
 	
 	\begin{proof}
 		\begin{mylist}
-			\item Let $f\colon X\to Y$ be uniformly continuous.
-			
-			$\Rightarrow$: Let $d(x_n, y_n)\to 0$ in domain. Let $\epsilon > 0$. Take $\delta> 0$ such that $d(f(x), f(y)) < \epsilon$ whenever $d(x, y) < \delta$. Take $N$ such that for each $n\ge N$, we have $d(x_n, y_n) < \delta\wimplies d(f(x_n), f(y_n)) < \epsilon$.
-			
-			$\Leftarrow$: If $f$ is not not uniformly continuous, then we may take an $\epsilon > 0$ and for each $n$, choose\myMargin{
-				\CC used!
-			}
-			$x_n, y_n\in E$ such that $d(x_n, y_n) < 1/n$ and yet $d(f(x_n), f(y_n)) \ge \epsilon$.
+			\item This is clear.
 			
 			
 			\item ``$\Rightarrow$'': Since Cauchy sequences are totally bounded.
@@ -507,17 +561,18 @@ First, an easy lemma:
 	\end{proof}
 	
 	\begin{rmk}
-		\begin{rmklist}
+		\begin{mylist}
+			\item $x\mapsto \sqrt x$ on $[0, 1]$ is uniformly continuous but not Lipschitz (observe at $0$).
+			
 			\item $x\mapsto x^2$ on $\mathbb R$ is Cauchy-regular and not uniformly continuous.
 			
 			\item $x\mapsto 1/x$ on $\mathbb R^+$ is continuous but not Cauchy-regular.
-		\end{rmklist}
+		\end{mylist}
 	\end{rmk}
 	
 	
-	% add preservation of lipschitz
 	\begin{thm}[Extension of Cauchy-regulars]\label{THM: extension of Chauchy-regs}
-		A Cauchy-regular function from a dense subset to a complete codomain has a unique continuous extension to the whole of domain, which is further Cauchy-regular. Furthermore, this extension preserves uniform continuity and isometry-city.
+		A Cauchy-regular function from a dense subset to a complete codomain has a unique continuous extension to the whole of domain, which is further Cauchy-regular. Furthermore, this extension preserves uniform and Lipschitz continuities, and isometry-city.
 	\end{thm}
 	
 	\begin{proof}
@@ -537,7 +592,7 @@ First, an easy lemma:
 			
 			
 			\item Extension:
-			This is clear since for $a\in A$, the constant sequence $(a, a, \ldots)$ converges to $a$ so that $\tilde f(a) = \lim_i f(a) = f(a)$.
+			This is clear, since for $a\in A$, the constant sequence $(a, a, \ldots)$ converges to $a$ so that $\tilde f(a) = \lim_i f(a) = f(a)$.
 			
 			
 			
@@ -583,7 +638,7 @@ First, an easy lemma:
 				} $(a_i), (b_i)\in A$ converging to $x$, $y$ \resp. Now, $d(a_i, b_i) < \delta$ eventually (as $\lim_i d(a_i, b_i) = d(x, y) < \delta$) so that $d(f(a_i), f(b_i)) < \epsilon$ eventually $\wimplies$ $d(\tilde f(x), \tilde f(y)) \which= \lim_i d(f(a_i), f(b_i))\le \epsilon$.
 				
 				
-				\item Preservation of isometry-city:
+				\item Preservation of Lipschitz continuity and isometry-city:
 				Same technique as in the last point.
 				\qedhere
 			\end{prooflist}
@@ -620,26 +675,11 @@ First, an easy lemma:
 		Then $\tilde f_i\circ \iota$'s are continuous extensions of $f$. Since \uline{$A$ is dense in $X$}, these must be equal due to \myRef{PRP: cont func into Hausdorff uniquely by its vals on dense subset}, from where there equality follows from the universal property of the completion $\iota\colon X\to\hat X$.
 	\end{proof}
 	
-	\noindent This immediately yields:
+	This immediately yields:
 	
 	\begin{cor}
 		In a complete space, the closures of subsets are their completions.
 	\end{cor}
-	
-	
-
-	\begin{prp}\label{PRP: cont funcs on compact are unif cont}
-		Continuous functions on compact sets are uniformly continuous.
-	\end{prp}
-	
-	\begin{proof}
-		Let $f\colon X\to Y$ be continuous with $X$ being compact. Let $\epsilon > 0$. For each $x\in X$, choose $\delta_x > 0$ such that $f(B_{\delta_x}(x))\subseteq B_\epsilon(f(x))$.\myMargin{No \AC needed!}
-		Let $B_{\delta_{x_1}/2}(x_1), \ldots, B_{\delta_{x_n}/2}(x_n)$ cover $X$ (since \uline{$X$ is compact}). Now, any $x, y\in X$ lie in some $B_{\delta_{x_i}}(x_i)$ whenever $d(x, y) < \min(\delta_{x_1}, \ldots, \delta_{x_n})/2\wimplies d(f(x), f(y)) < 2\epsilon$.
-	\end{proof}
-	
-	\begin{rmk}
-		To see the necessity of compact domain, consider $x\mapsto 1/x$ on $\mathbb R\setminus\{0\}$.
-	\end{rmk}
 	
 	
 	
@@ -685,7 +725,12 @@ First, an easy lemma:
 		Uniform convergence preserves continuity.
 	\end{cor}
 	
-	\noindent This is \ofc not true of just pointwise convergence.
+	This is \ofc not true of just pointwise convergence.
+	
+	
+	% - COMPLETENESS OF F IF X IS COMPLETE !!!
+	% - CLEANER PROOF OF COMPLETION OF METRIC SPACES --- motivated from NLS's
+	%		duals
 	
 	
 	
