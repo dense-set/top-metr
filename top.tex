@@ -33,6 +33,67 @@
 		\end{mylist}
 	\end{lem}
 	
+	
+	
+	
+\section{Subsets of Topological Spaces}
+
+	\begin{lem}\label{LEM: complements of clos and int}
+		For any $A\subseteq X$, we have
+		\begin{align*}
+			X\setminus\clos A\phantom{^\circ} & = (X\setminus A)^\circ\text{, and}\\
+			X\setminus A^\circ & = \phantom{(}\clos{X\setminus A}\text.
+		\end{align*}
+	\end{lem}
+	
+	\begin{proof}
+		The first equality:
+		\begin{subproof}
+			``$\subseteq$'': Let $x\notin \clos A$. Thus we have an \onbd $U$ of $x$ that is disjoint from $A$, \ie, $U\subseteq X\setminus A\wimplies U\subseteq \RHS$.
+		
+			\noindent``$\supseteq$'': Let $x\in\RHS$ so that take an \onbd $U$ of $x$ contained in $X\setminus A$, \ie, $U$ doesn't intersect $A$ so that $x\notin \clos A$.\qedhere
+		\end{subproof}
+		
+		The second follows if $A^\circ = X\setminus(\clos{X\setminus A})$. But by the first equality, $X\setminus(\clos{X\setminus A}) = (X\setminus(X\setminus A))^\circ\which = A^\circ$ as required.
+	\end{proof}
+	
+	
+	\begin{lem}\label{LEM: clos in subspaces}
+		Let $A\subseteq X_1\subseteq X$. Then
+		\begin{align*}
+			\Cl_{X_1}(A) & = \Cl_X(A)\cap X_1\text{, and}\\
+			\Int_{X_1}(A) & \supseteq \Int_X(A)\cap X_1\text.
+		\end{align*}
+	\end{lem}
+	
+	\begin{proof}
+		$\Cl_X(A)\cap X_1$ is a closed set in $X_1$ containing $A$. Further, if $F$ is any closed set in $X$ such that $A\subseteq F\cap X_1$, then we need to show that $F\cap X_1\supseteq \RHS$. Indeed, since $A\subseteq F$, we have that $\Cl_X(A)\subseteq F\wimplies\Cl_X(A)\cap X_1\subseteq F\cap X_1$.
+		
+		Finally, since $\Int_X(A)\cap X_1$ is open in $X_1$ containing $A$, the second inclusion follows.
+	\end{proof}
+	
+	\begin{rmk}
+		To show strict inclusion for $\Int$, consider $A = X_1 = \mathbb Q$ inside $X = \mathbb R$.
+	\end{rmk}
+	
+
+	\begin{lem}\label{LEM: homeo img of clos and int}
+		If $f\colon X\to Y$ is a \homeo, then for any $A\subseteq X$, we have
+		\begin{align*}
+			f(\clos A) & = \clos{f(A)}\text{, and}\\
+			f(A^\circ) & = f(A)^\circ\text.
+		\end{align*}
+	\end{lem}
+	
+	\begin{proof}
+		The first equality:
+		\begin{subproof}
+			``$\subseteq$'' is just restatement of \uline{$f$'s continuity}. Since \uline{$f^{-1}$ is also continuous}, we have $f^{-1}(\clos{f(A)})\subseteq \clos{f^{-1}(f(A))} = \clos A\wimplies \clos{f(A)}\subseteq f(\clos A)$, where we have also used \uline{bijectivity of $f$}.
+		\end{subproof}
+		
+		The second equality is equivalent to showing that $Y\setminus f(A^\circ) = Y\setminus f(A)^\circ$. Indeed, $Y\setminus f(A^\circ) = f(X\setminus A^\circ) = f(\clos{X\setminus A}) = \clos{f(X\setminus A)} = \clos{Y\setminus f(A)} = Y\setminus f(A)^\circ$.
+	\end{proof}
+	
 
 
 
@@ -41,9 +102,11 @@
 
 	Let $E\subseteq X$ and $f\colon E\to Y$. Then for any $c\in X$ and $L\in Y$, we write \defn{$f(x)\to L$ as $x\to c$ in $X$} iff for every \onbd $V$ of $L$ in $Y$, there exists an \onbd $U$ of $c$ in $X$ such that $f(E\cap U\setminus\{c\})\subseteq V$. Note that ``in $X$'' is crucial and can't be dropped: Consider $\id$ on $(0, 1)$. Take $X_1$ to be the disjoint union topology of $(0, 1)$ and $\{1\}$ and $X_2 := (0, 1]$ under the subspace topology. Then $1$ is isolated in $X_1$ and thus $f(x)\to L$ for each $L\in (0, 1)$ as $x\to 1$ in $X_1$ (see \ref{LEMi: lims at isolated and lim pts} of \myRef{LEM: lims at isolated and lim pts}). \Otoh, $f(x)\to 1$ only as $x\to 1$ in $X_2$ since $1$ is a limit point of $(0, 1)$ in $X_2$ (see \ref{LEMii: lims at isolated and lim pts} of \myRef{LEM: lims at isolated and lim pts}).
 	
-	Intuitively, what this shows is that $c$'s topological relation with $E$ is not determined by $E$ alone if $c\notin E$, which is plausible. However, if $c\in E$, then specification of ambient space is redundant (see \ref{LEMiii: lims at isolated and lim pts} of \myRef{LEM: lims at isolated and lim pts}).
-	
-	Nevertheless, we omit ``in $X$'' if the ambient space is clear from the context, or if the point at which the limit is being evaluated lies in the domain.
+	Intuitively, what this shows is that $c$'s topological relation with $E$ is not determined by $E$ alone if $c\notin E$, which is plausible. Neverthess, we omit ``in $X$'' if 
+	\begin{rmklist}
+		\item the ambient space is clear from the context; or,
+		\item the point at which the limit is being evaluated lies in the domain, in which case, the specification of ambient space is redundant (see \ref{LEMiii: lims at isolated and lim pts} of \myRef{LEM: lims at isolated and lim pts}).
+	\end{rmklist}
 	
 	\begin{lem}\label{LEM: lims at isolated and lim pts}
 		\begin{mylist}
@@ -390,6 +453,15 @@
 	\end{proof}
 	
 	
+	\begin{lem}\label{LEM: cont img of dense is dense}
+		Continuous image of dense is dense in the image.
+	\end{lem}
+	
+	\begin{proof}
+		Let $f\colon X\to Y$ be surjective continuous and $A\subseteq X$ be dense in $X$. Then $\clos{f(A)}\supseteq f(\clos A) = f(X) = Y$.
+	\end{proof}
+	
+	
 	\begin{lem}\label{LEM: prd of dense is dense}
 		Product of dense sets is dense in the product.
 	\end{lem}
@@ -417,9 +489,9 @@
 	
 	\begin{proof}
 		\begin{mylist}
-			\item We have $B = \cl_B(B\cap A)\subseteq B\cap \clos{B\cap A}\subseteq\clos{B\cap A}\subseteq\clos A$.
+			\item We have $B = \Cl_B(B\cap A)\subseteq B\cap \clos{B\cap A}\subseteq\clos{B\cap A}\subseteq\clos A$.
 			
-			\item We need to show that $\cl_B(B\cap A) = B$. Indeed, if $F$ is any closed such that $B\cap A\subseteq B\cap F$, then $B\subseteq F$ (otherwise, take $x\in B\setminus F\wimplies x\in B\setminus A\wimplies x\in B\setminus \clos A$ for \uline{$B$ is open}, contradicting $B\subseteq \clos A$).\qedhere
+			\item We need to show that $\Cl_B(B\cap A) = B$. Indeed, if $F$ is any closed such that $B\cap A\subseteq B\cap F$, then $B\subseteq F$ (otherwise, take $x\in B\setminus F\wimplies x\in B\setminus A\wimplies x\in B\setminus \clos A$ for \uline{$B$ is open}, contradicting $B\subseteq \clos A$).\qedhere
 		\end{mylist}
 	\end{proof}
 	
