@@ -343,10 +343,8 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 	\end{comment}
 	
 	
-	\begin{prp}
-		Any space is dense in its completion.\myMargin{
-			\mycheck \sout{Ponder: Can this be taken as an alternative universal property?}
-		}
+	\begin{prp}\label{PRP: a space is dense in its completion}
+		Any space is dense in its completion.
 	\end{prp}
 	
 	\begin{proof}
@@ -381,7 +379,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 	\end{proof}
 	
 	\begin{rmk}
-		Conversely, it's also true that if $A$ is dense in $X$ with $X$ complete, then $X$ is a completion of $A$. See \myRef{COR: completion via denseness}.
+		It turns out that this in fact characterizes completions. See \myRef{CORii: immediate conseqs of extension of Cauchy-regs} of \myRef{COR: immediate conseqs of extension of Cauchy-regs}.
 	\end{rmk}
 	
 	
@@ -644,42 +642,42 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 			\end{prooflist}
 	\end{proof}
 	
-	Thus, for a continuous function to be Cauchy-regular, it must be continuously extensible to the completion of its domain.
+	These immediately yields the following:
 	
-	\begin{cor}\label{COR: completion via denseness}
-		If $A$ is dense in $X$ and $\iota\colon X\to \hat X$ a completion of $X$, then
-		\[
-		\begin{tikzcd}
-			A\ar[r, hook] & X\ar[r, "\iota"] & \hat X
-		\end{tikzcd}
-		\]
-		is a completion of $A$.
+	\begin{cor}\label{COR: immediate conseqs of extension of Cauchy-regs}
+		\begin{mylist}
+			\item \itemHead{Characterizing Cauchy-regularity}
+			A continuous function between metric spaces is Cauchy-regular $\iff$ it admits a continuous extension to their completions.
+			
+			\item \itemHead{Characterizing completions}\label{CORii: immediate conseqs of extension of Cauchy-regs}
+			An isometry into a complete space is a completion of $\iff$ its image is dense in the codomain.
+			
+			\item \itemHead{Completion of dense subsets}\label{CORiii: immediate conseqs of extension of Cauchy-regs}
+			The completion of a dense subset is canonically obtained from that of the parent space.
+			
+			\item In a complete space, the closures of subsets are their completions.\footnote{
+				Note how this is different from the familair fact that the closed sets of a complete space are precisely its complete subsets.
+			}
+		\end{mylist}
 	\end{cor}
 	
 	\begin{proof}
-		It's clear that it's an isometry. Now, for $Y$ complete any isometry $f\colon A\to Y$ extends to $X\to Y$ via \myRef{THM: extension of Chauchy-regs} (since \uline{$A$ dense in $X$}), which then extends to $\hat X\to Y$:
-		\[
-		\begin{tikzcd}
-			A\ar[r, hook]\ar[dr, "f"'] & X\ar[r, "\iota"]\ar[d, dashed] & \hat X\ar[dl, dashed]\\
-			& Y &
-		\end{tikzcd}
-		\]
-		
-		For uniqueness, let $f$ be extended by $\tilde f_1$ and $\tilde f_2$:
-		\[
-		\begin{tikzcd}
-			A\ar[r, hook]\ar[dr, "f"'] & X\ar[r, "\iota"] & \hat X\ar[dl, shift left, "\tilde f_1"']\ar[dl, shift right, "f_2"]\\
-			& Y &
-		\end{tikzcd}
-		\]
-		Then $\tilde f_i\circ \iota$'s are continuous extensions of $f$. Since \uline{$A$ is dense in $X$}, these must be equal due to \myRef{PRP: cont func into Hausdorff uniquely by its vals on dense subset}, from where there equality follows from the universal property of the completion $\iota\colon X\to\hat X$.
+		\begin{mylist}
+			\item Obviously.
+			
+			\item ``$\Rightarrow$'' is the content of \myRef{PRP: a space is dense in its completion}. ``$\Leftarrow$'' follows since an isometry on a dense subset extends isometrically to the whole domain.
+			
+			\item Let $A$ be dense in $X$ and $\iota\colon X\to \hat X$ a completion of $X$. We show that the composition
+			\begin{tikzcd}
+				A\ar[r, hook] & X\ar[r, "\iota"] & \hat X
+			\end{tikzcd}
+			is a completion of $A$. Due to \myRef{CORii: immediate conseqs of extension of Cauchy-regs}, it suffices to have that $\iota(A)$ is dense in $\hat X$ $\wimpliedby$ $\iota(A)$ is dense in $\iota(X)$ (since \uline{$\iota(X)$ is already dense in $\hat X$}) $\wimpliedby$ \uline{$A$ is dense in $X$} (since $\iota$ is continuous; see \myRef{LEM: cont img of dense is dense}) which is indeed true.
+			
+			
+			\item Follows from \myRef{CORiii: immediate conseqs of extension of Cauchy-regs}.
+			\qedhere
+		\end{mylist}
 	\end{proof}
-	
-	This immediately yields:
-	
-	\begin{cor}
-		In a complete space, the closures of subsets are their completions.
-	\end{cor}
 	
 	
 	
