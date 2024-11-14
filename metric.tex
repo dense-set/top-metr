@@ -264,7 +264,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 		\]
 		The following defines a well-defined metric on $\hat X$:
 		\[
-		\hat d\bigl( (x_i), (y_i) \bigr) := \lim\nolimits_i d(x_i, y_i)
+		\hat d\bigl( \overline{(x_i)}, \overline{(y_i)} \bigr) := \lim\nolimits_i d(x_i, y_i)
 		\]
 		We show that $\hat X$ is complete:
 		\begin{subproof}
@@ -298,7 +298,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 
 		\noindent We now check for the universal property:
 		\begin{subproof}
-			Note that $\iota\colon X\to\hat X$ given by $x\mapsto (x, x, \ldots)$ is an isometry. Let $f\colon X\to Y$ be another isometry with $Y$ being complete. Suppose it does factor through $\iota$ via an isometry $\hat f$:
+			Note that $\iota\colon X\to\hat X$ given by $x\mapsto \overline{(x, x, \ldots)}$ is an isometry. Let $f\colon X\to Y$ be another isometry with $Y$ being complete. Suppose it does factor through $\iota$ via an isometry $\hat f$:
 			\[
 			\begin{tikzcd}[column sep=small]
 				X\ar[dr, "\iota"']\ar[rr, "f"] && Y\\
@@ -359,11 +359,11 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 				\clos{\iota(X)}\ar[r, hook] & \hat X\ar[r, dashed] & Y
 			\end{tikzcd}
 			\]
-			For uniqueness, just note that any factoring $\hat f$ of $f$ through $\iota|$ is uniquely determined on $\iota(X)$ which is dense in $\clos{\iota(X)}$, thereby also getting determined on $\clos{\iota(X)}$ (by \myRef{PRP: cont func into Hausdorff uniquely by its vals on dense subset}):
+			For uniqueness, just note that any isometric factoring $\tilde f$ of $f$ through $\iota|$ is determined on $\iota(X)$ which is dense in $\clos{\iota(X)}$, thereby also getting determined on $\clos{\iota(X)}$ (by \myRef{PRP: cont func into Hausdorff uniquely by its vals on dense subset}, for $\tilde f$ is continuous):
 			\[
 			\begin{tikzcd}
 				& X\ar[dl]\ar[d, "\iota|"]\ar[dr, "f"] &\\
-				\iota(X)\ar[r, hook] & \clos{\iota(X)}\ar[r, "\hat f"'] & Y
+				\iota(X)\ar[r, hook] & \clos{\iota(X)}\ar[r, "\tilde f"'] & Y
 			\end{tikzcd}
 			\]
 		\end{prooflist}
@@ -375,7 +375,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 			\clos{\iota(X)}\ar[rr, hook, "\operatorname{incl}", shift left] & & \hat X\ar[ll, dashed, "\alpha", shift left]
 		\end{tikzcd}
 		\]
-		It follows that $\iota|$ factors through itself via $\alpha\circ\operatorname{incl}$, so that it is precisely $\id_{\clos{\iota(X)}}$ (since \uline{$\clos{\iota(X)}$ is a completion}) $\wimplies$ $\operatorname{incl}$ is surjective $\wimplies$ $\clos{\iota(X)} = \hat X$.
+		It follows that $\iota$ factors through itself via $\operatorname{incl}\circ \alpha$, so that it is precisely $\id_{\hat X}$ $\wimplies$ $\operatorname{incl}$ is surjective $\wimplies$ $\clos{\iota(X)} = \hat X$.
 	\end{proof}
 	
 	\begin{rmk}
@@ -416,7 +416,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 				}
 			(like $x\to x^3$ on $\mathbb R$). Then Cauchy sequences are just convergent sequences, which are thus the same. However, $\id\colon X_\text{old}\to X_\text{new}$ is not uniformly continuous.
 			
-			\item Consider $x\mapsto 1/x$ on $\mathbb R^+$. However, note that $1, 2, 3, \ldots$ is Cauchy in the new metric and not in the old one.
+			\item Consider $f\colon x\mapsto 1/x$ on $X := \mathbb R^+$. However, note that $1, 2, 3, \ldots$ is Cauchy in the new metric and not in the old one.
 		\end{mylist}
 	\end{rmk}
 	
@@ -426,18 +426,16 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 		\begin{lem}\label{LEM: to show counters for equiv of metrics}
 			Let $f\colon X\to X$ be a bijection which thus induces a new metric on $X$. Then \tfh:
 			\begin{mylist}
-				\item The new metric is topologically equivalent to the old one $\iff$ $f$ is a \homeo on $X_\text{old}$.
+				\item The new metric is topologically equivalent to the old one $\iff$ $f$, $f^{-1}$ are continuous on $X_\text{old}$.
 				
 				\item $\id\colon X_\text{old}\to X_\text{new}$ is uniformly continuous $\iff$ $f$ is uniformly continuous on $X_\text{old}$.
+				
+				\item The new metric is uniformly equivalent to the old one $\iff$ $f$, $f^{-1}$ are Lipschitz on $X_\text{old}$.
 			\end{mylist}
 		\end{lem}
 		
 		\begin{dgrsProof}
-			\begin{mylist}
-				\item Use \myRef{COR: first countable T1 topologies via their sequences} and \myRef{PRP: continuity and closure in first countable}.
-				
-				\item Since by definition, $d_\text{new}(x, y) = d_\text{old}(f(x), f(y))$.\qedhere
-			\end{mylist}
+			For the first use \myRef{PRP: continuity and closure in first countable} and \myRef{COR: first countable T1 topologies via their sequences}. The next two follow easily from the definition of $d_\text{new}$.
 		\end{dgrsProof}
 	\end{dgrs}
 	
@@ -466,7 +464,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 	\end{proof}
 	
 	\begin{rmk}
-		Another choice of $f$ could have been $x\mapsto \min(x, 1)$.
+		Another choice of $f$ could have been $x\mapsto \min(x, 1)$, which although subadditive, is not bijective.
 	\end{rmk}
 	
 	
@@ -650,7 +648,7 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 			A continuous function between metric spaces is Cauchy-regular $\iff$ it admits a continuous extension to their completions.
 			
 			\item \itemHead{Characterizing completions}\label{CORii: immediate conseqs of extension of Cauchy-regs}
-			An isometry into a complete space is a completion of $\iff$ its image is dense in the codomain.
+			An isometry into a complete space is a completion $\iff$ its image is dense in the codomain.
 			
 			\item \itemHead{Completion of dense subsets}\label{CORiii: immediate conseqs of extension of Cauchy-regs}
 			The completion of a dense subset is canonically obtained from that of the parent space.
@@ -783,5 +781,17 @@ Uniform properties encompass things like uniform continuity and Cauchy sequences
 	\end{rmk}
 	
 	\begin{cor}
-		If countably many closed subsets of a nonempty complete metric space unite to the whole space, then one of them has a nonemtpy interior.
+		If countably many closed subsets of a nonempty complete metric space unite to the whole space, then one of them has a nonempty interior.
 	\end{cor}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
